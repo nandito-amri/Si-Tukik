@@ -1,3 +1,4 @@
 # Si-Tukik
 
-# Ini adalah percobaan pertama
+# Fitur login masih jauh dari ekspektasi wkwk
+login pakai email: becsdicoding@gmail.com password: 654321

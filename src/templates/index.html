@@ -45,7 +45,7 @@
               <a class="nav-link" href="#footer">Contact</a>
             </li>
           </ul>
-          <button class="btn px-4 rounded-4 filled-button ms-auto me-3" data-bs-toggle="modal" data-bs-target="#loginModal" type="submit" >Masuk</button>
+          <button class="btn px-4 rounded-4 filled-button ms-auto me-3" data-bs-toggle="modal" data-bs-target="#loginModal" type="submit" data-button="login1">Masuk</button>
         </div>
       </div>
     </nav>
@@ -64,17 +64,18 @@
         <div class="modal-body">
           <form>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Alamat Email</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <label for="email" class="form-label">Alamat Email</label>
+              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Masukkan Email">
             </div>
             <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Masukkan Password">
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn text-center mx-auto filled-button">Masuk</button>
+          <button type="submit" class="btn text-center mx-auto filled-button" data-button="login">Masuk</button>
+          <button type="submit" class="btn text-center mx-auto filled-button" data-button="forgot">Lupa Password</button>
         </div>
       </div>
     </div>
@@ -82,6 +83,7 @@
   <!-- END LOGIN -->
 
   <!-- DETAIL PENYU LEKANG -->
+<div class="container">
   <div class="modal modal-lg fade" id="detailPenyuLekang" tabindex="-1" aria-labelledby="detailPenyuLekang" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -473,7 +475,7 @@
     <section class="mx-5">
       <div class="container text-center text-md-start mt-5 pt-4">
         <div class="row mt-3">
-          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">home
             <h6 class="text-uppercase fw-bold mb-4">
               <img src="https://i.ibb.co/gTW5Z4y/SI-TUKIK-LOGO-1.png" alt="SI-TUKIK-LOGO-1" border="0" style="width: 44px" class="me-2">
         Si Tukik
@@ -525,9 +527,21 @@
       <a class="text-reset fw-bold" href="https://mdbootstrap.com/">Capstone Dicoding C22-177</a>
     </div>
   </footer>
+</div>
   <!-- END FOOTER -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  <!-- mandatory -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    
+  <!-- opsional -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+  <script src="../scripts/firebase-config.js"></script>
+  <script src="../scripts/script.js"></script>
 
   <!-- AOS -->
   <!-- <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
