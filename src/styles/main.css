@@ -2,10 +2,60 @@ a:link {
     text-decoration: none;
   }
   
-a:visited {
+  a:visited {
     text-decoration:none;
-}
+  }
   
-.content {
+  .content {
     padding-top: 2.5rem;
-}
+  }
+  
+  @media only screen and (min-width: 600px) {
+    .tukik{
+      max-width: 25rem
+    }
+  }
+  
+  .card{
+    margin: auto
+  }
+  
+  body {
+    padding-top: 50px;
+  }
+  
+  .filled-button{
+    background-color: #61764B !important; 
+    color: white !important;
+  }
+  
+  .filled-button:hover{
+    background-color: #fff !important;
+    color: #61764B !important;
+    border-color: #61764B !important;
+  }
+  
+  .ghost-button{
+    background-color: #fff !important; 
+    color: #61764B !important; 
+    border-color: #61764B !important;
+  }
+  
+  .ghost-button:hover{
+    background-color: #61764B !important;
+    color: #fff !important;
+    border-color: #61764B !important;
+  }
+  
+  #dokumentasiKonservasi{
+    padding-bottom: 100px;
+  }
+
+  .statistic-card {
+    background-color: #61764B !important;
+    color: #fff !important;
+  }
+
+  #home, #about, #statistik, #dokumentasi {
+    padding-top: 5rem;
+  }
