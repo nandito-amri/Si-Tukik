@@ -45,7 +45,12 @@
               <a class="nav-link" href="#footer">Contact</a>
             </li>
           </ul>
-          <button class="btn px-4 rounded-4 filled-button ms-auto me-3" data-bs-toggle="modal" data-bs-target="#loginModal" type="submit" data-button="login1">Masuk</button>
+          <div id="login-button" class="ms-auto">
+            <button class="btn px-4 rounded-4 filled-button ms-auto me-5" data-bs-toggle="modal" data-bs-target="#loginModal" type="submit" data-button="login1">Masuk</button>
+          </div>
+          <div class="ms-auto d-none" id="logout-button">
+            <button class="btn px-4 rounded-4 filled-button ms-auto me-5" data-button="logout" id="logout" type="submit">Logout</button>
+          </div>
         </div>
       </div>
     </nav>
@@ -67,15 +72,16 @@
               <label for="email" class="form-label">Alamat Email</label>
               <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Masukkan Email">
             </div>
-            <div class="mb-3">
+            <div class="">
               <label for="password" class="form-label">Password</label>
               <input type="password" class="form-control" id="password" placeholder="Masukkan Password">
             </div>
+            <button type="submit" class="btn btn-link fw-light" data-button="forgot" id="forgot">Lupa Password</button>
           </form>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn text-center mx-auto filled-button" data-button="login">Masuk</button>
-          <button type="submit" class="btn text-center mx-auto filled-button" data-button="forgot">Lupa Password</button>
+          
         </div>
       </div>
     </div>
@@ -83,7 +89,6 @@
   <!-- END LOGIN -->
 
   <!-- DETAIL PENYU LEKANG -->
-<div class="container">
   <div class="modal modal-lg fade" id="detailPenyuLekang" tabindex="-1" aria-labelledby="detailPenyuLekang" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -284,198 +289,200 @@
   <!-- END DETAIL PENYU SISIK -->
   <!-- END MODAL -->
 
-  <!-- CONTENT -->
-  <!-- WELCOME -->
-  <div class="row row-cols-1 row-cols-md-2 g-4 mx-5 my-5" id="home">
-    <div class="col">
-      <div class="mx-auto">
-        <h1 style="color: #61764B" class="fw-bold">Si Tukik</h1>
-        <h2>Penyelamat Penyu</h2>
-        <p>Selamat datang di aplikasi <span class="fw-bold">Si Tukik!</span> Aplikasi <span class="fw-bold">Si Tukik</span> adalah aplikasi pendataan penyu yang digunakan pada konservasi penyu Pantai Pelangi Yogyakarta. Melalui aplikasi ini konservator bisa melakukan pendataan dan kamu sebagai masyarakat umum bisa melihat statistik datanya.</p>
-        
-        <div class="row row-cols-1 row-cols-md-2 g-4 mx-2 my-2 ">
-          <div class="col text-center">
-            <button type="button" class="btn filled-button px-5 rounded-4" data-bs-toggle="modal" data-bs-target="#">Mulai</button>
-          </div>
-          <div class="col text-center">
-            <button type="button" class="btn ghost-button px-5 rounded-4" data-bs-toggle="modal" data-bs-target="#">Informasi</button>
-          </div>
-        </div>
-      </div>
-    </div>
-     <div class="col">
-       <div class="mx-auto text-center">
-         <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" alt="Penyu-Sisik" border="0" class="img-fluid rounded-4" style="width: 25rem">
-       </div>
-     </div>
-  </div>
-  <!-- END WELCOME -->
-
-  <!-- ABOUT US -->
-  <h2 class="text-center mt-5" id="about">About Us</h2>
-  <p class="text-center">Konservasi Penyu Pantai Pelangi Yogyakarta.</p>
-  <div class="row row-cols-1 row-cols-md-2 g-4 mx-5 my-2">
-    <div class="col">
-      <div class="mx-auto text-center">
-        <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" alt="Penyu-Sisik" border="0" class="img-fluid rounded-4" style="width: 25rem">
-      </div>
-    </div>
-    <div >
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione tempore quisquam cum voluptatem asperiores, autem voluptatibus voluptates sequi molestiae. Recusandae.</p>
-      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores recusandae facere reprehenderit ea maiores. Fugiat, eum dicta illo nobis quaerat neque sequi eaque, maiores ullam beatae aperiam laudantium laboriosam omnis!</p>
-      <br><br>
-      <p>Bapak Siapa Namanya Gitu</p>
-      <p>Founder 4K Komunitas Konservasi</p>
-    </div>
-  </div>
-  <!-- END ABOUT US -->
-
-  <!-- STATISTIK -->
   <main>
-  <!-- UMUM -->
-    <h2 class="text-center mt-5" id="statistik">Statistik Konservasi Penyu</h2>
-    <h3 class="text-center mt-3 pt-4">Statistik tahun 2022</h3>
-    <div class="row row-cols-1 row-cols-md-5 g-4 mx-5 my-2">
+    <div class="container">
+    <!-- CONTENT -->
+    <!-- WELCOME -->
+    <div class="row row-cols-1 row-cols-md-2 g-4 mx-5 my-5" id="home">
       <div class="col">
-        <div class="card statistic-card text-center" style="max-width: 18rem;">
-          <div class="card-header">Sarang Ditemukan</div>
-          <div class="card-body">
-            <h5 class="card-title" id="sarangDitemukan">642</h5>
+        <div class="mx-auto">
+          <h1 style="color: #61764B" class="fw-bold">Si Tukik</h1>
+          <h2>Penyelamat Penyu</h2>
+          <p>Selamat datang di aplikasi <span class="fw-bold">Si Tukik!</span> Aplikasi <span class="fw-bold">Si Tukik</span> adalah aplikasi pendataan penyu yang digunakan pada konservasi penyu Pantai Pelangi Yogyakarta. Melalui aplikasi ini konservator bisa melakukan pendataan dan kamu sebagai masyarakat umum bisa melihat statistik datanya.</p>
+          
+          <div class="row row-cols-1 row-cols-md-2 g-4 mx-2 my-2 ">
+            <div class="col text-center">
+              <button type="button" class="btn filled-button px-5 rounded-4" data-bs-toggle="modal" data-bs-target="#">Mulai</button>
+            </div>
+            <div class="col text-center">
+              <button type="button" class="btn ghost-button px-5 rounded-4" data-bs-toggle="modal" data-bs-target="#">Informasi</button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="card statistic-card text-center" style="max-width: 18rem;">
-          <div class="card-header">Telur Ditemukan</div>
-          <div class="card-body">
-            <h5 class="card-title" id="telurDitemukan">642</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card statistic-card text-center" style="max-width: 18rem;">
-          <div class="card-header">Telur Menetas</div>
-          <div class="card-body">
-            <h5 class="card-title" id="telurMenetas">642</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card statistic-card text-center" style="max-width: 18rem;">
-          <div class="card-header">Telur Gagal Menetas</div>
-          <div class="card-body">
-            <h5 class="card-title" id="telurGagal">642</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card statistic-card text-center" style="max-width: 18rem;">
-          <div class="card-header">Tukik Dilepaskan</div>
-          <div class="card-body">
-            <h5 class="card-title" id="tukikDilepaskan">642</h5>
-          </div>
-        </div>
-      </div>
+       <div class="col">
+         <div class="mx-auto text-center">
+           <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" alt="Penyu-Sisik" border="0" class="img-fluid rounded-4" style="width: 25rem">
+         </div>
+       </div>
     </div>
-     
-    <h3 class="text-center mt-5">Statistik Keseluruhan</h3>
-    <div class="row row-cols-1 row-cols-md-4 g-4 mx-5 my-2">
-      <div class="col">
-        <div class="card statistic-card text-center" style="max-width: 18rem;">
-          <div class="card-header">Total Sarang Ditemukan</div>
-          <div class="card-body">
-            <h5 class="card-title" id="totalSarang">642</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card statistic-card text-center" style="max-width: 18rem;">
-          <div class="card-header">Total Telur Ditemukan</div>
-          <div class="card-body">
-            <h5 class="card-title" id="totalTelur">642</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card statistic-card text-center" style="max-width: 18rem;">
-          <div class="card-header">Total Telur Menetas</div>
-          <div class="card-body">
-            <h5 class="card-title" id="totalMenetas">642</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card statistic-card text-center" style="max-width: 18rem;">
-          <div class="card-header">Total Tukik Dilepaskan</div>
-          <div class="card-body">
-            <h5 class="card-title" id="totalDilepaskan">642</h5>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- END UMUM -->
+    <!-- END WELCOME -->
   
-    <!-- JENIS -->
-    <h3 class="text-center mt-5">Statistik Berdasarkan Jenis</h3>
+    <!-- ABOUT US -->
+    <h2 class="text-center mt-5" id="about">About Us</h2>
+    <p class="text-center">Konservasi Penyu Pantai Pelangi Yogyakarta.</p>
     <div class="row row-cols-1 row-cols-md-2 g-4 mx-5 my-2">
-      <div class="col"> 
-        <div class="card text-center mx-auto  rounded-4 border-0" style="max-width: 30rem;">
-          <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" alt="Penyu-Sisik" border="0" class="rounded-4">
-          <div class="card-body">
-            <button class="btn filled-button me-4 mt-3 px-3 rounded-4" data-bs-toggle="modal" data-bs-target="#detailPenyuLekang" type="button">Penyu Lekang</button>
-          </div>
-        </div>
-      </div>
       <div class="col">
-        <div class="card text-center mx-auto tipe_penyu rounded-4 border-0" style="max-width: 30rem;">
-          <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" alt="Penyu-Sisik" border="0" class="rounded-4">
-          <div class="card-body">
-            <button class="btn filled-button me-4 mt-3 px-3 rounded-4" data-bs-toggle="modal" data-bs-target="#detailPenyuSisik" type="button">Penyu Sisik</button>
+        <div class="mx-auto text-center">
+          <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" alt="Penyu-Sisik" border="0" class="img-fluid rounded-4" style="width: 25rem">
+        </div>
+      </div>
+      <div >
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione tempore quisquam cum voluptatem asperiores, autem voluptatibus voluptates sequi molestiae. Recusandae.</p>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores recusandae facere reprehenderit ea maiores. Fugiat, eum dicta illo nobis quaerat neque sequi eaque, maiores ullam beatae aperiam laudantium laboriosam omnis!</p>
+        <br><br>
+        <p>Bapak Siapa Namanya Gitu</p>
+        <p>Founder 4K Komunitas Konservasi</p>
+      </div>
+    </div>
+    <!-- END ABOUT US -->
+  
+    <!-- STATISTIK -->
+    <!-- UMUM -->
+      <h2 class="text-center mt-5" id="statistik">Statistik Konservasi Penyu</h2>
+      <h3 class="text-center mt-3 pt-4">Statistik tahun 2022</h3>
+      <div class="row row-cols-1 row-cols-md-5 g-4 mx-5 my-2">
+        <div class="col">
+          <div class="card statistic-card text-center" style="max-width: 18rem;">
+            <div class="card-header">Sarang Ditemukan</div>
+            <div class="card-body">
+              <h5 class="card-title" id="sarangDitemukan">642</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card statistic-card text-center" style="max-width: 18rem;">
+            <div class="card-header">Telur Ditemukan</div>
+            <div class="card-body">
+              <h5 class="card-title" id="telurDitemukan">642</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card statistic-card text-center" style="max-width: 18rem;">
+            <div class="card-header">Telur Menetas</div>
+            <div class="card-body">
+              <h5 class="card-title" id="telurMenetas">642</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card statistic-card text-center" style="max-width: 18rem;">
+            <div class="card-header">Telur Gagal Menetas</div>
+            <div class="card-body">
+              <h5 class="card-title" id="telurGagal">642</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card statistic-card text-center" style="max-width: 18rem;">
+            <div class="card-header">Tukik Dilepaskan</div>
+            <div class="card-body">
+              <h5 class="card-title" id="tukikDilepaskan">642</h5>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- END JENIS -->
-  </main>
-  <!-- END STATISTIK -->
-
-  <!-- DOKUMENTASI -->
-  <h2 class="text-center mt-5" id="dokumentasi">Dokumentasi</h2>
-  <div id="dokumentasiKonservasi" class="carousel slide mx-auto my-5" data-bs-ride="true" style="max-width: 70%">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#dokumentasiKonservasi" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#dokumentasiKonservasi" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#dokumentasiKonservasi" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" class="d-block w-100" alt="1">
+       
+      <h3 class="text-center mt-5">Statistik Keseluruhan</h3>
+      <div class="row row-cols-1 row-cols-md-4 g-4 mx-5 my-2">
+        <div class="col">
+          <div class="card statistic-card text-center" style="max-width: 18rem;">
+            <div class="card-header">Total Sarang Ditemukan</div>
+            <div class="card-body">
+              <h5 class="card-title" id="totalSarang">642</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card statistic-card text-center" style="max-width: 18rem;">
+            <div class="card-header">Total Telur Ditemukan</div>
+            <div class="card-body">
+              <h5 class="card-title" id="totalTelur">642</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card statistic-card text-center" style="max-width: 18rem;">
+            <div class="card-header">Total Telur Menetas</div>
+            <div class="card-body">
+              <h5 class="card-title" id="totalMenetas">642</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card statistic-card text-center" style="max-width: 18rem;">
+            <div class="card-header">Total Tukik Dilepaskan</div>
+            <div class="card-body">
+              <h5 class="card-title" id="totalDilepaskan">642</h5>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="carousel-item">
-        <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" class="d-block w-100" alt="2">
+      <!-- END UMUM -->
+    
+      <!-- JENIS -->
+      <h3 class="text-center mt-5">Statistik Berdasarkan Jenis</h3>
+      <div class="row row-cols-1 row-cols-md-2 g-4 mx-5 my-2">
+        <div class="col"> 
+          <div class="card text-center mx-auto  rounded-4 border-0" style="max-width: 30rem;">
+            <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" alt="Penyu-Sisik" border="0" class="rounded-4">
+            <div class="card-body">
+              <button class="btn filled-button me-4 mt-3 px-3 rounded-4" data-bs-toggle="modal" data-bs-target="#detailPenyuLekang" type="button">Penyu Lekang</button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card text-center mx-auto tipe_penyu rounded-4 border-0" style="max-width: 30rem;">
+            <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" alt="Penyu-Sisik" border="0" class="rounded-4">
+            <div class="card-body">
+              <button class="btn filled-button me-4 mt-3 px-3 rounded-4" data-bs-toggle="modal" data-bs-target="#detailPenyuSisik" type="button">Penyu Sisik</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="carousel-item">
-        <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" class="d-block w-100" alt="3">
+      <!-- END JENIS -->
+    <!-- END STATISTIK -->
+  
+    <!-- DOKUMENTASI -->
+    <h2 class="text-center mt-5" id="dokumentasi">Dokumentasi</h2>
+    <div id="dokumentasiKonservasi" class="carousel slide mx-auto my-5" data-bs-ride="true" style="max-width: 70%">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#dokumentasiKonservasi" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#dokumentasiKonservasi" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#dokumentasiKonservasi" data-bs-slide-to="2" aria-label="Slide 3"></button>
       </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" class="d-block w-100" alt="1">
+        </div>
+        <div class="carousel-item">
+          <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" class="d-block w-100" alt="2">
+        </div>
+        <div class="carousel-item">
+          <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" class="d-block w-100" alt="3">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#dokumentasiKonservasi" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#dokumentasiKonservasi" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#dokumentasiKonservasi" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#dokumentasiKonservasi" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+    <!-- END DOKUMENTASI -->
+    <!-- END CONTENT -->
   </div>
-  <!-- END DOKUMENTASI -->
-  <!-- END CONTENT -->
+  </main>
 
   <!-- FOOTER -->
   <footer class="text-center text-lg-start text-muted" style="background-color: #E6F2DA" id="footer">
     <section class="mx-5">
       <div class="container text-center text-md-start mt-5 pt-4">
         <div class="row mt-3">
-          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">home
+          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
             <h6 class="text-uppercase fw-bold mb-4">
               <img src="https://i.ibb.co/gTW5Z4y/SI-TUKIK-LOGO-1.png" alt="SI-TUKIK-LOGO-1" border="0" style="width: 44px" class="me-2">
         Si Tukik
@@ -527,7 +534,7 @@
       <a class="text-reset fw-bold" href="https://mdbootstrap.com/">Capstone Dicoding C22-177</a>
     </div>
   </footer>
-</div>
+
   <!-- END FOOTER -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>

@@ -59,3 +59,13 @@ a:link {
   #home, #about, #statistik, #dokumentasi {
     padding-top: 5rem;
   }
+
+  #penyu {
+    margin: 5rem 0;
+  }
+
+  #forgot {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+  }
