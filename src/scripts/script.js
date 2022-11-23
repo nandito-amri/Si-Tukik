@@ -19,12 +19,13 @@ const Landing = () => {
   const password = document.querySelector('#password');
 
   const loginBtn = document.querySelector('[data-button="login"]');
-  const forgotBtn = document.querySelector('[data-button="forgot"]');
+  // const forgotBtn = document.querySelector('[data-button="forgot"]');
+  const forgotBtn = document.getElementById('forgot');
 
   loginBtn.onclick = () => {
     firebase.auth().signInWithEmailAndPassword(email.value, password.value)
       .then((cred) => {
-        alert(`Selamat Datang Akun: ${cred.user.uid}`);
+        alert(`Berhasil Masuk! Selamat Datang Akun: ${cred.user.uid}`);
         location.reload();
       })
       .catch((error) => {
@@ -45,18 +46,31 @@ const Landing = () => {
 
 const Dashboard = (user) => {
   const masukBtn = document.querySelector('[data-button="login1"]');
+  // const profileBtn = document.getElementById('profile-button');
+  const logoutBtn = document.getElementById('logout-button');
+  const footer = document.getElementById('footer');
   const element = document.createElement('div');
   element.classList.add('Dashboard');
   element.innerHTML = (`
-        <br>
-        <h2>Login Sukses, ini adalah halaman dashboard</h2>
-        <button class="btn px-4 rounded-4 filled-button ms-auto me-3" data-bs-toggle="modal" data-bs-target="#loginModal" type="submit" data-button="logout">Logout</button>
+  <div class="container mx-auto text-center px-5" id="penyu">
+  <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" alt="Penyu-Sisik" border="0" class="img-fluid rounded tukik" style="width: 30rem">
+  <div>
+    <h1 class="mt-5">Si Tukik</h1>
+    <h2 class="mb-4">Penyelamat Penyu</h2>
+    <div class="mx-auto" style="max-width:500px">
+    <p>Selamat datang, Konservator! Melalui fitur ini kamu bisa melakukan pendataan dan memonitor perkembangan penyu yang ada di konservasi. </p>
+    </div>
+    <button class="btn filled-button mt-4 px-4 rounded-4" data-bs-toggle="modal" data-bs-target="#">Mulai Mendata</button>
+  </div>
     `);
   masukBtn.style.display = 'none';
+  logoutBtn.classList.remove('d-none');
+  footer.classList.add('d-none');
   container.innerHTML = '';
   container.appendChild(element);
 
-  const logout = element.querySelector('[data-button="logout"]');
+  // const logout = element.querySelector('[data-button="logout"]');
+  const logout = document.getElementById('logout');
   logout.onclick = () => firebase.auth().signOut().then(() => {
     alert('Berhasil Logout');
     location.reload();
