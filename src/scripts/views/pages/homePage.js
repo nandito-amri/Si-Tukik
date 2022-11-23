@@ -1,7 +1,9 @@
-const PenangkaranPage = {
+// Halaman untuk landing pertama bagi masyarakat
+
+const HomePage = {
   async render() {
     return `
-      <h2>Penangkaran Page</h2>
+      <h2>Home Page</h2>
     `;
   },
 
@@ -10,4 +12,4 @@ const PenangkaranPage = {
   },
 };
 
-export default PenangkaranPage;
+export default HomePage;

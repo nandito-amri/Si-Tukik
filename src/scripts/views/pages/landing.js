@@ -1,7 +1,9 @@
-const PenangkaranPage = {
+// Halaman ketika berhasil login
+
+const LandingPage = {
   async render() {
     return `
-      <h2>Penangkaran Page</h2>
+      <h2>Landing Page</h2>
     `;
   },
 
@@ -10,4 +12,4 @@ const PenangkaranPage = {
   },
 };
 
-export default PenangkaranPage;
+export default LandingPage;
