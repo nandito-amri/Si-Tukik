@@ -1,5 +1,6 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
+import { initializeApp } from 'firebase/app';
+
 const firebaseConfig = {
   apiKey: 'AIzaSyAFKEQHQFce3ySGF-iuMxSLOJtWtPbj7KE',
   authDomain: 'situkik-2e007.firebaseapp.com',
@@ -9,4 +10,4 @@ const firebaseConfig = {
   appId: '1:817452762071:web:a21345c9de3307f628c192',
 };
 
-const app = firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
