@@ -19,13 +19,12 @@ const Landing = () => {
   const password = document.querySelector('#password');
 
   const loginBtn = document.querySelector('[data-button="login"]');
-  // const forgotBtn = document.querySelector('[data-button="forgot"]');
   const forgotBtn = document.getElementById('forgot');
 
   loginBtn.onclick = () => {
     firebase.auth().signInWithEmailAndPassword(email.value, password.value)
       .then((cred) => {
-        alert(`Berhasil Masuk! Selamat Datang Akun: ${cred.user.uid}`);
+        alert(`Berhasil Masuk! Selamat Datang, Konservator!`);
         location.reload();
       })
       .catch((error) => {
@@ -46,7 +45,6 @@ const Landing = () => {
 
 const Dashboard = (user) => {
   const masukBtn = document.querySelector('[data-button="login1"]');
-  // const profileBtn = document.getElementById('profile-button');
   const logoutBtn = document.getElementById('logout-button');
   const footer = document.getElementById('footer');
   const element = document.createElement('div');
@@ -69,7 +67,6 @@ const Dashboard = (user) => {
   container.innerHTML = '';
   container.appendChild(element);
 
-  // const logout = element.querySelector('[data-button="logout"]');
   const logout = document.getElementById('logout');
   logout.onclick = () => firebase.auth().signOut().then(() => {
     alert('Berhasil Logout');
