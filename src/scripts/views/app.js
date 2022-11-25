@@ -1,24 +1,12 @@
-import DrawerInitiator from '../utils/drawer-initiator';
+import firebaseConfig from '../globals/firebase-config';
+import FirebaseInitiator from '../utils/firebase-initiator';
 import UrlParser from '../routes/url-parser';
 import routes from '../routes/routes';
 
 class App {
-  constructor({ button, drawer, content }) {
-    this._button = button;
-    this._drawer = drawer;
-    this._content = content;
-
-    this._initialAppShell();
-  }
-
-  _initialAppShell() {
-    DrawerInitiator.init({
-      button: this._button,
-      drawer: this._drawer,
-      content: this._content,
-    });
-
-    // Dapat ditambahkan komponen Application Shell lainnya
+  constructor() {
+    FirebaseInitiator.init({ firebaseConfig });
+    console.log('Initial App sheel berhasil');
   }
 
   async renderPage() {

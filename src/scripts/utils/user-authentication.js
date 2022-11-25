@@ -1,25 +1,5 @@
 /* eslint-disable import/no-unresolved */
-/* eslint-disable no-alert */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-undef */
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signOut,
-} from 'firebase/auth';
-
-const container = document.querySelector('.container');
-const auth = getAuth();
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    Dashboard(user);
-  } else {
-    Landing();
-  }
-});
+import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 const Landing = () => {
   document.getElementsByClassName('.container');
@@ -29,7 +9,7 @@ const Landing = () => {
   // const forgotBtn = document.getElementById('forgot');
 
   loginBtn.onclick = () => {
-    signInWithEmailAndPassword(auth, email.value, password.value)
+    signInWithEmailAndPassword(getAuth(), email.value, password.value)
       .then(() => {
         alert('Berhasil Masuk! Selamat Datang, Konservator!');
         location.reload();
@@ -52,6 +32,7 @@ const Landing = () => {
 };
 
 const Dashboard = (user) => {
+  const container = document.querySelector('.container');
   const masukBtn = document.querySelector('[data-button="login1"]');
   const logoutBtn = document.getElementById('logout-button');
   const footer = document.getElementById('footer');
@@ -76,8 +57,10 @@ const Dashboard = (user) => {
   container.appendChild(element);
 
   const logout = document.getElementById('logout');
-  logout.onclick = () => signOut(auth).then(() => {
+  logout.onclick = () => signOut(getAuth()).then(() => {
     alert('Berhasil Logout');
     location.reload();
   }).catch((err) => alert(err));
 };
+
+export { Landing, Dashboard };
