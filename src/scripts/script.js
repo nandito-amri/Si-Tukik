@@ -1,14 +1,19 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-alert */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
-
-import { firebaseConfig, app } from './firebase-config';
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth';
 
 const container = document.querySelector('.container');
-
-firebase.auth().onAuthStateChanged((user) => {
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
   if (user) {
     Dashboard(user);
   } else {
@@ -20,13 +25,12 @@ const Landing = () => {
   document.getElementsByClassName('.container');
   const email = document.querySelector('#email');
   const password = document.querySelector('#password');
-
   const loginBtn = document.querySelector('[data-button="login"]');
-  const forgotBtn = document.getElementById('forgot');
+  // const forgotBtn = document.getElementById('forgot');
 
   loginBtn.onclick = () => {
-    firebase.auth().signInWithEmailAndPassword(email.value, password.value)
-      .then((cred) => {
+    signInWithEmailAndPassword(auth, email.value, password.value)
+      .then(() => {
         alert('Berhasil Masuk! Selamat Datang, Konservator!');
         location.reload();
       })
@@ -35,7 +39,7 @@ const Landing = () => {
       });
   };
 
-  forgotBtn.onclick = () => {
+  /* forgotBtn.onclick = () => {
     firebase.auth().sendPasswordResetEmail(email.value)
       .then(() => {
         alert('Reset Verif sudah dikirim ke email');
@@ -43,7 +47,8 @@ const Landing = () => {
       .catch((error) => {
         // ..
       });
-  };
+    };
+  */
 };
 
 const Dashboard = (user) => {
@@ -71,7 +76,7 @@ const Dashboard = (user) => {
   container.appendChild(element);
 
   const logout = document.getElementById('logout');
-  logout.onclick = () => firebase.auth().signOut().then(() => {
+  logout.onclick = () => signOut(auth).then(() => {
     alert('Berhasil Logout');
     location.reload();
   }).catch((err) => alert(err));
