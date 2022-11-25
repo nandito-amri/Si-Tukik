@@ -4,7 +4,9 @@ import UrlParser from '../routes/url-parser';
 import routes from '../routes/routes';
 
 class App {
-  constructor() {
+  constructor({ content }) {
+    this._content = content;
+
     FirebaseInitiator.init({ firebaseConfig });
     console.log('Initial App sheel berhasil');
   }

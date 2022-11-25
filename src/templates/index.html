@@ -33,23 +33,23 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#home">Home</a>
+              <a class="nav-link active" aria-current="page" href="">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#about">About</a>
+              <a class="nav-link" href="">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#statistik">Statistics</a>
+              <a class="nav-link" href="">Statistics</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#footer">Contact</a>
+              <a class="nav-link" href="">Contact</a>
             </li>
           </ul>
           <div id="login-button" class="ms-auto">
             <button class="btn px-4 rounded-4 filled-button ms-auto me-5" data-bs-toggle="modal" data-bs-target="#loginModal" type="submit" data-button="login1">Masuk</button>
           </div>
           <div class="ms-auto d-none" id="logout-button">
-            <button class="btn px-4 rounded-4 filled-button ms-auto me-5" data-button="logout" id="logout" type="submit">Logout</button>
+            <button class="btn px-4 rounded-4 filled-button ms-auto me-5" data-button="logout" id="logout" type="submit"><a href="#home" class="linkButton">Logout</a></button>
           </div>
         </div>
       </div>
@@ -287,10 +287,14 @@
     </div>
   </div>
   <!-- END DETAIL PENYU SISIK -->
+
+  <!-- MODAL TAMBAH SARANG -->
+  
+  <!-- END MODAL TAMBAH SARANG -->
   <!-- END MODAL -->
 
   <main>
-    <div class="container">
+    <div class="container" id="mainContainer">
     <!-- CONTENT -->
     <!-- WELCOME -->
     <div class="row row-cols-1 row-cols-md-2 g-4 mx-5 my-5" id="home">
@@ -536,24 +540,10 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
   <!-- mandatory -->
-<<<<<<< HEAD
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    
-  <!-- opsional -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-  
-
-  <!-- <script src="../scripts/firebase-config.js"></script> -->
-  <script src="../scripts/script.js"></script>
-=======
   <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   <!--<script defer src="../scripts/globals/firebase-config.js"></script>-->
->>>>>>> c21ccfb25095c62d1a21943254cde76ac149dce9
 
   <!-- AOS -->
   <!-- <script src="https://unpkg.com/aos@next/dist/aos.js"></script>

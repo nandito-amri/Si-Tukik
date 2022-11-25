@@ -1,10 +1,3 @@
-<<<<<<< HEAD:src/scripts/firebase-config.js
-/* eslint-disable no-unused-vars */
-// eslint-disable-next-line import/no-unresolved
-import { initializeApp } from 'firebase/app';
-
-=======
->>>>>>> c8e91290dc4dffbfc601c975a71009c73cdd20f9:src/scripts/globals/firebase-config.js
 const firebaseConfig = {
   apiKey: 'AIzaSyAFKEQHQFce3ySGF-iuMxSLOJtWtPbj7KE',
   authDomain: 'situkik-2e007.firebaseapp.com',

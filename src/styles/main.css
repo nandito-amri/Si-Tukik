@@ -7,21 +7,31 @@ a:link {
   }
   
   .content {
-    padding-top: 2.5rem;
+    padding-top: 1rem;
   }
   
   @media only screen and (min-width: 600px) {
     .tukik{
       max-width: 25rem
     }
+
+    /* #penangkaranPenyuSisik, #penangkaranPenyuLekang{
+      margin: 1.5rem 10rem
+    } */
   }
+/*   
+  @media only screen and (min-width: 1200px) {
+    #penangkaranPenyuSisik, #penangkaranPenyuLekang{
+      margin: 1.5rem 28rem
+    }
+  } */
   
   .card{
     margin: auto
   }
   
   body {
-    padding-top: 50px;
+    padding-top: 30px;
   }
   
   .filled-button{
@@ -68,4 +78,59 @@ a:link {
     font-size: 14px;
     margin: 0;
     padding: 0;
+  }
+
+  .linkButton {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .linkButton:hover {
+    color: #61764B
+  }
+
+  .pagination {
+    border: hidden;
+    margin-top: 1.5rem
+  }
+  
+  .pagination>li{
+    border: none;
+  }
+  
+  .pagination>li>a{
+    border: none;
+    border-bottom-style: solid;
+    color: #61764B 
+  }
+  
+  .pagination li .active {
+    background-color: #61764B ;
+    border-color: #61764B 
+  }
+  
+  .pagination > li > a:focus,
+  .pagination > li > a:hover,
+  .pagination > li > span:focus,
+  .pagination > li > span:hover
+  {
+      color: #61764B;
+      background-color: #eee;
+  /*     border-color: #ddd; */
+  }
+  
+  .judul {
+    margin-top: 5rem
+  }
+
+  #tambahSarangModal p, #editSarangModal p, #detailDataModal p {
+    font-weight: 600
+  }
+  
+  #detailDataModal p span {
+    font-weight: 400
+  }
+  
+  i {
+    /* color: white */
   }

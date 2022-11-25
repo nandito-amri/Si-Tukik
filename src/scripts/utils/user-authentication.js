@@ -47,7 +47,7 @@ const Dashboard = (user) => {
     <div class="mx-auto" style="max-width:500px">
     <p>Selamat datang, Konservator! Melalui fitur ini kamu bisa melakukan pendataan dan memonitor perkembangan penyu yang ada di konservasi. </p>
     </div>
-    <button class="btn filled-button mt-4 px-4 rounded-4" data-bs-toggle="modal" data-bs-target="#">Mulai Mendata</button>
+    <button class="btn filled-button mt-4 px-4 rounded-4" data-bs-toggle="modal" data-bs-target="#"><a href="#/patroli" class="linkButton">Mulai Mendata</a></button>
   </div>
     `);
   masukBtn.style.display = 'none';
