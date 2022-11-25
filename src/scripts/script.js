@@ -3,6 +3,9 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-undef */
+
+import { firebaseConfig, app } from './firebase-config';
+
 const container = document.querySelector('.container');
 
 firebase.auth().onAuthStateChanged((user) => {
@@ -24,7 +27,7 @@ const Landing = () => {
   loginBtn.onclick = () => {
     firebase.auth().signInWithEmailAndPassword(email.value, password.value)
       .then((cred) => {
-        alert(`Berhasil Masuk! Selamat Datang, Konservator!`);
+        alert('Berhasil Masuk! Selamat Datang, Konservator!');
         location.reload();
       })
       .catch((error) => {
