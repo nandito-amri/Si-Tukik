@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import swal from 'sweetalert';
 import {
   addDoc,
   getFirestore,
@@ -200,6 +201,7 @@ const PatroliPage = {
 
     const addData = async (e) => {
       e.preventDefault();
+      swal('Berhasil Menambahkan data', '', 'success');
 
       const newPatroli = {
         tglPenemuan: tglPenemuan.value,
@@ -275,6 +277,7 @@ const PatroliPage = {
 
       // Delete data collection
       await deleteDoc(doc(db, 'patroli', id));
+      swal('Berhasil Menghapus data', '', 'success');
     };
 
     // Event Listener
