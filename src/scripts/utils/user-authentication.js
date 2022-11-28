@@ -17,8 +17,8 @@ const Landing = () => {
           location.reload();
         }, 1000);
       })
-      .catch((error) => {
-        alert(error);
+      .catch(() => {
+        swal('Gagal Masuk', '', 'error');
       });
   };
 
