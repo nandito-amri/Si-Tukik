@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import swal from 'sweetalert';
 
 const Landing = () => {
   document.getElementsByClassName('.container');
@@ -11,11 +12,13 @@ const Landing = () => {
   loginBtn.onclick = () => {
     signInWithEmailAndPassword(getAuth(), email.value, password.value)
       .then(() => {
-        alert('Berhasil Masuk! Selamat Datang, Konservator!');
-        location.reload();
+        swal('Berhasil Masuk', 'Selamat datang Konservator!', 'success');
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
       })
-      .catch((error) => {
-        alert(error);
+      .catch(() => {
+        swal('Gagal Masuk', '', 'error');
       });
   };
 
@@ -58,8 +61,10 @@ const Dashboard = (user) => {
 
   const logout = document.getElementById('logout');
   logout.onclick = () => signOut(getAuth()).then(() => {
-    alert('Berhasil Logout');
-    location.reload();
+    swal('Berhasil Keluar', '', 'success');
+    setTimeout(() => {
+      location.reload();
+    }, 1000);
   }).catch((err) => alert(err));
 };
 
