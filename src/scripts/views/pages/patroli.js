@@ -365,9 +365,9 @@ const PatroliPage = {
     </div>
   </div>
             
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-            <button type="button" class="btn btn-success updateBtn" data-bs-dismiss="modal">Update</button>
+        <div class="modal-footer mx-auto">
+            <button type="button" class="btn ghost-button" data-bs-dismiss="modal">Batal</button>
+            <button type="button" class="btn filled-button updateBtn" data-bs-dismiss="modal">Update</button>
         </div>
       </div>
     </div>
