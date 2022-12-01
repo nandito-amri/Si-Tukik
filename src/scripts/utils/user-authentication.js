@@ -42,7 +42,7 @@ const Dashboard = (user) => {
   const element = document.createElement('div');
   element.classList.add('Dashboard');
   element.innerHTML = (`
-  <div class="container mx-auto text-center px-5" id="penyu">
+  <div class="container mx-auto text-center px-5" id="welcomePage">
   <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" alt="Penyu-Sisik" border="0" class="img-fluid rounded tukik" style="width: 30rem">
   <div>
     <h1 class="mt-5">Si Tukik</h1>
