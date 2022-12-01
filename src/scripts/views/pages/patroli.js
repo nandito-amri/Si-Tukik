@@ -444,8 +444,8 @@ const PatroliPage = {
         inputTelurMati.value = '';
         inputTelurAbnormal.value = '';
       // eslint-disable-next-line no-shadow
-      } catch (e) {
-        console.error('Error adding document: ', e);
+      } catch (error) {
+        console.error('Error adding document: ', error);
       }
     };
 
@@ -494,8 +494,8 @@ const PatroliPage = {
     });
 
     // View One Data
-    const viewData = async (e) => {
-      const { id } = e.target;
+    const viewData = async (event) => {
+      const { id } = event.target;
 
       const docSnap = await getDoc(doc(db, 'patroli', id));
 
@@ -519,17 +519,20 @@ const PatroliPage = {
       }
     };
     // Delete Data
-    const removeData = async (e) => {
-      const { id } = e.target;
+    const removeData = async (event) => {
+      const { id } = event.target;
 
       // Delete data collection
-      await deleteDoc(doc(db, 'patroli', id));
-      swal('Berhasil Menghapus data', '', 'success');
+      const text = 'Yakin ingin menghapus data?';
+      if (confirm(text) === true) {
+        await deleteDoc(doc(db, 'patroli', id));
+        swal('Berhasil Menghapus data', '', 'success');
+      }
     };
 
     // Update Data
-    const updateData = async (e) => {
-      const { id } = e.target;
+    const updateData = async (event) => {
+      const { id } = event.target;
 
       // get data
       const docSnap = await getDoc(doc(db, 'patroli', id));
