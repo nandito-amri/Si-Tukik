@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+// eslint-disable-next-line import/no-unresolved
 import swal from 'sweetalert';
 import {
   addDoc,
@@ -463,9 +464,9 @@ const PatroliPage = {
               <td class="text-center">${doc.data().tglPeneluran}</td>
               <td class="text-center">${doc.data().perkiraanTglPeneluran}</td>
               <td class="text-center">
-                <button type="button" class="btn filled-button me-4 px-2 rounded-4 update-btn" data-bs-toggle="modal" data-bs-target="#modalUpdateData" id=${doc.id}>Update</button>
-                <button type="button" class="btn filled-button me-4 px-2 rounded-4 delete-btn" id=${doc.id}>Delete</button>
-                <button type="button" class="btn filled-button me-4 px-2 rounded-4 view-btn" data-bs-toggle="modal" data-bs-target="#modalViewData" id=${doc.id}>Details</button>
+              <button type="button" class="btn btn-warning px-2 rounded-4 update-btn" data-bs-toggle="modal" data-bs-target="#modalUpdateData" id=${doc.id}><i class="bi bi-pencil-square action-btn"></i></button>
+              <button type="button" class="btn btn-danger px-2 rounded-4 delete-btn" id=${doc.id}><i class="bi bi-trash-fill"></i></button>
+                <button type="button" class="btn btn-success px-2 rounded-4 view-btn" data-bs-toggle="modal" data-bs-target="#modalViewData" id=${doc.id}><i class="bi bi-three-dots"></i></button>
                 </td>
             </tr>
         `;
