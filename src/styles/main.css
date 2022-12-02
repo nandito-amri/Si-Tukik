@@ -134,3 +134,8 @@ body {
 .action-btn {
   color: white
 }
+
+.detailPenyuMenetas {
+  width: 16rem;
+  margin: auto
+}
