@@ -91,9 +91,9 @@ const PatroliPage = {
                 <label for="inputJenisPenyu01" class="form-label">Jenis Penyu</label>
                <div class="input-group mb-3">
               <select class="form-select" id="inputJenisPenyu01">
-                <option selected>Jenis Penyu</option>
-                <option value="1">Lekang</option>
-                <option value="2">Sisik</option>
+      
+                <option value="Lekang">Lekang</option>
+                <option value="Sisik">Sisik</option>
               </select>
               </div>
                </div>
@@ -323,9 +323,9 @@ const PatroliPage = {
                 <label for="update-JenisPenyu01" class="form-label fw-bold d-block">Jenis Penyu</label>
                <div class="input-group mb-3">
               <select class="form-select" id="update-JenisPenyu01">
-                <option selected>Jenis Penyu</option>
-                <option value="1">Lekang</option>
-                <option value="2">Sisik</option>
+                
+                <option value="Lekang">Lekang</option>
+                <option value="Sisik">Sisik</option>
               </select>
               </div>
                </div>
@@ -409,8 +409,26 @@ const PatroliPage = {
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const addData = async (e) => {
-      e.preventDefault();
+    // eslint-disable-next-line consistent-return
+    const addData = async (event) => {
+      event.preventDefault();
+      if (
+        tglPenemuan.value === ''
+      || waktuDitemukan.value === ''
+      || tglPeneluran.value === ''
+      || perkiraanTglPeneluran.value === ''
+      || inputKetebalanPenutup.value === ''
+      || inputKedalamanDasar.value === ''
+      || inputJumlahTelur.value === ''
+      || inputJenisPenyu01.value === ''
+      || inputTelurBaik.value === ''
+      || inputTelurRusak.value === ''
+      || inputTelurMati.value === ''
+      || inputTelurAbnormal.value === ''
+      ) {
+        swal('Harap isi kolom yang kosong', '', 'warning');
+        return false;
+      }
       swal('Berhasil Menambahkan data', '', 'success');
 
       const newPatroli = {
@@ -561,8 +579,8 @@ const PatroliPage = {
     };
 
     // save update data
-    const simpanUpdateData = async (e) => {
-      const { id } = e.target;
+    const simpanUpdateData = async (event) => {
+      const { id } = event.target;
       const updatePatroli = {
         tglPenemuan: updatetglPenemuan.value,
         waktuDitemukan: updatewaktuDitemukan.value,
