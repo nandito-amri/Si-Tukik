@@ -7,6 +7,8 @@ import {
   collection,
   doc,
   getDoc,
+  query,
+  getDocs,
   onSnapshot,
   deleteDoc,
   updateDoc,
@@ -368,158 +370,148 @@ const PatroliPage = {
         <div class="modal-footer mx-auto">
             <button type="button" class="btn ghost-button" data-bs-dismiss="modal">Batal</button>
             <button type="button" class="btn filled-button updateBtn" data-bs-dismiss="modal">Update</button>
-        </div>
-      </div>
-    </div>
-  </div>
-        `;
+            </div>
+            </div>
+            </div>
+            </div>
+            `;
   },
 
   async afterRender() {
-    // Get Element
-    const tbody = document.getElementById('tabel_patroli');
-    const tglPenemuan = document.getElementById('tglPenemuan');
-    const waktuDitemukan = document.getElementById('waktuDitemukan');
-    const tglPeneluran = document.getElementById('tglPeneluran');
-    const perkiraanTglPeneluran = document.getElementById('perkiraanTglPeneluran');
-    const inputKetebalanPenutup = document.getElementById('inputKetebalanPenutup');
-    const inputKedalamanDasar = document.getElementById('inputKedalamanDasar');
-    const inputJumlahTelur = document.getElementById('inputJumlahTelur');
-    const inputJenisPenyu01 = document.getElementById('inputJenisPenyu01');
-    const inputTelurBaik = document.getElementById('inputTelurBaik');
-    const inputTelurRusak = document.getElementById('inputTelurRusak');
-    const inputTelurMati = document.getElementById('inputTelurMati');
-    const inputTelurAbnormal = document.getElementById('inputTelurAbnormal');
+    const RENDER_EVENT = 'render-event';
+    const tableContainer = document.getElementById('tabel_patroli');
+    tableContainer.innerHTML = '';
 
-    // Get Element for set
-    const addPatroli = document.getElementById('add-btn');
-
-    const updatetglPenemuan = document.getElementById('update-tglPenemuan');
-    const updatewaktuDitemukan = document.getElementById('update-waktuDitemukan');
-    const updatetglPeneluran = document.getElementById('update-tglPeneluran');
-    const updateperkiraanTglPeneluran = document.getElementById('update-perkiraanTglPeneluran');
-    const updateKetebalanPenutup = document.getElementById('update-KetebalanPenutup');
-    const updateKedalamanDasar = document.getElementById('update-KedalamanDasar');
-    const updateJumlahTelur = document.getElementById('update-JumlahTelur');
-    const updateJenisPenyu01 = document.getElementById('update-JenisPenyu01');
-    const updateTelurBaik = document.getElementById('update-TelurBaik');
-    const updateTelurRusak = document.getElementById('update-TelurRusak');
-    const updateTelurMati = document.getElementById('update-TelurMati');
-    const updateTelurAbnormal = document.getElementById('update-TelurAbnormal');
+    // Get database from firestore
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const database = getFirestore(app);
 
-    // eslint-disable-next-line consistent-return
-    const addData = async (event) => {
-      event.preventDefault();
+    // Read Data
+    // const readData = async () => {
+    //   tableContainer.innerHTML = '';
+
+    // };
+
+    // Add data (menambahkan sarang)
+    const addSarang = async () => {
+      const tglPenemuan = document.getElementById('tglPenemuan').value;
+      const waktuDitemukan = document.getElementById('waktuDitemukan').value;
+      const tglPeneluran = document.getElementById('tglPeneluran').value;
+      const perkiraanTglPeneluran = document.getElementById('perkiraanTglPeneluran').value;
+      const inputKetebalanPenutup = document.getElementById('inputKetebalanPenutup').value;
+      const inputKedalamanDasar = document.getElementById('inputKedalamanDasar').value;
+      const inputJumlahTelur = document.getElementById('inputJumlahTelur').value;
+      const inputJenisPenyu01 = document.getElementById('inputJenisPenyu01').value;
+      const inputTelurBaik = document.getElementById('inputTelurBaik').value;
+      const inputTelurRusak = document.getElementById('inputTelurRusak').value;
+      const inputTelurMati = document.getElementById('inputTelurMati').value;
+      const inputTelurAbnormal = document.getElementById('inputTelurAbnormal').value;
+
       if (
-        tglPenemuan.value === ''
-      || waktuDitemukan.value === ''
-      || tglPeneluran.value === ''
-      || perkiraanTglPeneluran.value === ''
-      || inputKetebalanPenutup.value === ''
-      || inputKedalamanDasar.value === ''
-      || inputJumlahTelur.value === ''
-      || inputJenisPenyu01.value === ''
-      || inputTelurBaik.value === ''
-      || inputTelurRusak.value === ''
-      || inputTelurMati.value === ''
-      || inputTelurAbnormal.value === ''
+        tglPenemuan === ''
+      || waktuDitemukan === ''
+      || tglPeneluran === ''
+      || perkiraanTglPeneluran === ''
+      || inputKetebalanPenutup === ''
+      || inputKedalamanDasar === ''
+      || inputJumlahTelur === ''
+      || inputJenisPenyu01 === ''
+      || inputTelurBaik === ''
+      || inputTelurRusak === ''
+      || inputTelurMati === ''
+      || inputTelurAbnormal === ''
       ) {
         swal('Harap isi kolom yang kosong', '', 'warning');
-        return false;
+      } else {
+        const newPatroli = {
+          tglPenemuan,
+          waktuDitemukan,
+          tglPeneluran,
+          perkiraanTglPeneluran,
+          inputKetebalanPenutup,
+          inputKedalamanDasar,
+          inputJumlahTelur,
+          inputJenisPenyu01,
+          inputTelurBaik,
+          inputTelurRusak,
+          inputTelurMati,
+          inputTelurAbnormal,
+        };
+
+        try {
+          await addDoc(collection(database, 'patroli'), newPatroli);
+          swal('Berhasil Menambahkan data', '', 'success');
+        } catch (error) {
+          console.error('Error adding document: ', error);
+        }
       }
-      swal('Berhasil Menambahkan data', '', 'success');
 
-      const newPatroli = {
-        tglPenemuan: tglPenemuan.value,
-        waktuDitemukan: waktuDitemukan.value,
-        tglPeneluran: tglPeneluran.value,
-        perkiraanTglPeneluran: perkiraanTglPeneluran.value,
-        inputKetebalanPenutup: inputKetebalanPenutup.value,
-        inputKedalamanDasar: inputKedalamanDasar.value,
-        inputJumlahTelur: inputJumlahTelur.value,
-        inputJenisPenyu01: inputJenisPenyu01.value,
-        inputTelurBaik: inputTelurBaik.value,
-        inputTelurRusak: inputTelurRusak.value,
-        inputTelurMati: inputTelurMati.value,
-        inputTelurAbnormal: inputTelurAbnormal.value,
-      };
+      document.dispatchEvent(new Event(RENDER_EVENT));
+    };
 
-      try {
-        const docRef = await addDoc(collection(db, 'patroli'), newPatroli);
+    // Edit Data (mengubah data sarang)
+    const updateSarang = async (id) => {
+      const updatetglPenemuan = document.getElementById('update-tglPenemuan');
+      const updatewaktuDitemukan = document.getElementById('update-waktuDitemukan');
+      const updatetglPeneluran = document.getElementById('update-tglPeneluran');
+      const updateperkiraanTglPeneluran = document.getElementById('update-perkiraanTglPeneluran');
+      const updateKetebalanPenutup = document.getElementById('update-KetebalanPenutup');
+      const updateKedalamanDasar = document.getElementById('update-KedalamanDasar');
+      const updateJumlahTelur = document.getElementById('update-JumlahTelur');
+      const updateJenisPenyu01 = document.getElementById('update-JenisPenyu01');
+      const updateTelurBaik = document.getElementById('update-TelurBaik');
+      const updateTelurRusak = document.getElementById('update-TelurRusak');
+      const updateTelurMati = document.getElementById('update-TelurMati');
+      const updateTelurAbnormal = document.getElementById('update-TelurAbnormal');
 
-        tglPenemuan.value = '';
-        waktuDitemukan.value = '';
-        tglPeneluran.value = '';
-        perkiraanTglPeneluran.value = '';
-        inputKetebalanPenutup.value = '';
-        inputKedalamanDasar.value = '';
-        inputJumlahTelur.value = '';
-        inputJenisPenyu01.value = '';
-        inputTelurBaik.value = '';
-        inputTelurRusak.value = '';
-        inputTelurMati.value = '';
-        inputTelurAbnormal.value = '';
-      // eslint-disable-next-line no-shadow
-      } catch (error) {
-        console.error('Error adding document: ', error);
+      const docSnap = await getDoc(doc(database, 'patroli', id));
+
+      if (docSnap.exists()) {
+        updatetglPenemuan.value = docSnap.data().tglPenemuan;
+        updatewaktuDitemukan.value = docSnap.data().waktuDitemukan;
+        updatetglPeneluran.value = docSnap.data().tglPeneluran;
+        updateperkiraanTglPeneluran.value = docSnap.data().perkiraanTglPeneluran;
+        updateKetebalanPenutup.value = docSnap.data().inputKetebalanPenutup;
+        updateKedalamanDasar.value = docSnap.data().inputKedalamanDasar;
+        updateJumlahTelur.value = docSnap.data().inputJumlahTelur;
+        updateJenisPenyu01.value = docSnap.data().inputJenisPenyu01;
+        updateTelurBaik.value = docSnap.data().inputTelurBaik;
+        updateTelurRusak.value = docSnap.data().inputTelurRusak;
+        updateTelurMati.value = docSnap.data().inputTelurMati;
+        updateTelurAbnormal.value = docSnap.data().inputTelurAbnormal;
+
+        const confirmUpdatingSarangButton = document.querySelector('.updateBtn');
+        confirmUpdatingSarangButton.addEventListener('click', async () => {
+          const updatePatroli = {
+            tglPenemuan: updatetglPenemuan.value,
+            waktuDitemukan: updatewaktuDitemukan.value,
+            tglPeneluran: updatetglPeneluran.value,
+            perkiraanTglPeneluran: updateperkiraanTglPeneluran.value,
+            inputKetebalanPenutup: updateKetebalanPenutup.value,
+            inputKedalamanDasar: updateKedalamanDasar.value,
+            inputJumlahTelur: updateJumlahTelur.value,
+            inputJenisPenyu01: updateJenisPenyu01.value,
+            inputTelurBaik: updateTelurBaik.value,
+            inputTelurRusak: updateTelurRusak.value,
+            inputTelurMati: updateTelurMati.value,
+            inputTelurAbnormal: updateTelurAbnormal.value,
+          };
+
+          await updateDoc(doc(database, 'patroli', id), updatePatroli);
+          document.dispatchEvent(new Event(RENDER_EVENT));
+          swal('Sukses', 'Data berhasil diupdate', 'success');
+        });
+        confirmUpdatingSarangButton.setAttribute('id', id);
+      } else {
+        console.log('No such document!');
       }
     };
 
-    // Read Data
-    const unsubscribe = onSnapshot(collection(db, 'patroli'), (querySnapshot) => {
-      let table = '';
-      let no = 1;
-
-      // eslint-disable-next-line no-shadow
-      querySnapshot.forEach((doc) => {
-        table += `
-            <tr>
-              <th scope="row" class="text-center">${no}</th>
-              <td>${doc.data().tglPenemuan}</td>
-              <td class="text-center">${doc.data().waktuDitemukan}</td>
-              <td class="text-center">${doc.data().tglPeneluran}</td>
-              <td class="text-center">${doc.data().perkiraanTglPeneluran}</td>
-              <td class="text-center">
-              <button type="button" class="btn btn-warning px-2 rounded-4 update-btn" data-bs-toggle="modal" data-bs-target="#modalUpdateData" title="Ubah Data" id=${doc.id}><i class="bi bi-pencil-square action-btn"></i></button>
-              <button type="button" class="btn btn-danger px-2 rounded-4 delete-btn" title="Hapus Data" id=${doc.id}><i class="bi bi-trash-fill"></i></button>
-                <button type="button" class="btn btn-success px-2 rounded-4 view-btn" data-bs-toggle="modal" data-bs-target="#modalViewData" title="Detail" id=${doc.id}>•••</button>
-                </td>
-            </tr>
-        `;
-
-        // eslint-disable-next-line no-plusplus
-        no++;
-      });
-
-      tbody.innerHTML = table;
-      const deleteButton = document.querySelectorAll('.delete-btn');
-      deleteButton.forEach((deleteBtn) => {
-        // eslint-disable-next-line no-use-before-define
-        deleteBtn.addEventListener('click', removeData);
-      });
-      const updateButton = document.querySelectorAll('.update-btn');
-      updateButton.forEach((updateBtn) => {
-        // eslint-disable-next-line no-undef, no-use-before-define
-        updateBtn.addEventListener('click', updateData);
-      });
-      const detailButton = document.querySelectorAll('.view-btn');
-      detailButton.forEach((detailBtn) => {
-        // eslint-disable-next-line no-use-before-define
-        detailBtn.addEventListener('click', viewData);
-      });
-    });
-
-    // View One Data
-    const viewData = async (event) => {
-      const { id } = event.target;
-
-      const docSnap = await getDoc(doc(db, 'patroli', id));
+    // View Detail Data (melihat data sarang secara detail)
+    const viewSarang = async (id) => {
+      const docSnap = await getDoc(doc(database, 'patroli', id));
 
       if (docSnap.exists()) {
-        // get element view
-
         document.getElementById('viewtglPenemuan').innerHTML = docSnap.data().tglPenemuan;
         document.getElementById('viewwaktuDitemukan').innerHTML = docSnap.data().waktuDitemukan;
         document.getElementById('viewtglPeneluran').innerHTML = docSnap.data().tglPeneluran;
@@ -536,72 +528,85 @@ const PatroliPage = {
         console.log('No such document!');
       }
     };
-    // Delete Data
-    const removeData = async (event) => {
-      const { id } = event.target;
 
-      // Delete data collection
+    // Delete Data (menghapus data sarang)
+    const deleteSarang = async (id) => {
       const text = 'Yakin ingin menghapus data?';
       if (confirm(text) === true) {
-        await deleteDoc(doc(db, 'patroli', id));
+        await deleteDoc(doc(database, 'patroli', id));
+        console.log('deleteing is succeess');
         swal('Berhasil Menghapus data', '', 'success');
       }
+
+      document.dispatchEvent(new Event(RENDER_EVENT));
     };
 
-    // Update Data
-    const updateData = async (event) => {
-      const { id } = event.target;
+    document.addEventListener(RENDER_EVENT, async () => {
+      tableContainer.innerHTML = '';
+      const q = query(collection(database, 'patroli'));
 
-      // get data
-      const docSnap = await getDoc(doc(db, 'patroli', id));
+      const querySnapshot = await getDocs(q);
+      let index = 1;
+      querySnapshot.forEach((item) => {
+        console.log(item);
+        const sarangElement = document.createElement('tr');
+        sarangElement.innerHTML += `
+            <th scope="row" class="text-center">${index}</th>
+            <td>${item.data().tglPenemuan}</td>
+            <td class="text-center">${item.data().waktuDitemukan}</td>
+            <td class="text-center">${item.data().tglPeneluran}</td>
+            <td class="text-center">${item.data().perkiraanTglPeneluran}</td>
+            <td class="text-center">
+              <button type="button" class="btn btn-warning px-2 rounded-4 update-btn" data-bs-toggle="modal" data-bs-target="#modalUpdateData" title="Ubah Data" id=${item.id}><i class="bi bi-pencil-square action-btn"></i></button>
+              <button type="button" class="btn btn-danger px-2 rounded-4 delete-btn" title="Hapus Data" id=${item.id}><i class="bi bi-trash-fill"></i></button>
+              <button type="button" class="btn btn-success px-2 rounded-4 view-btn" data-bs-toggle="modal" data-bs-target="#modalViewData" title="Detail" id=${item.id}>•••</button>
+            </td>
+          `;
 
-      if (docSnap.exists()) {
-        updatetglPenemuan.value = docSnap.data().tglPenemuan;
-        updatewaktuDitemukan.value = docSnap.data().waktuDitemukan;
-        updatetglPeneluran.value = docSnap.data().tglPeneluran;
-        updateperkiraanTglPeneluran.value = docSnap.data().perkiraanTglPeneluran;
-        updateKetebalanPenutup.value = docSnap.data().inputKetebalanPenutup;
-        updateKedalamanDasar.value = docSnap.data().inputKedalamanDasar;
-        updateJumlahTelur.value = docSnap.data().inputJumlahTelur;
-        updateJenisPenyu01.value = docSnap.data().inputJenisPenyu01;
-        updateTelurBaik.value = docSnap.data().inputTelurBaik;
-        updateTelurRusak.value = docSnap.data().inputTelurRusak;
-        updateTelurMati.value = docSnap.data().inputTelurMati;
-        updateTelurAbnormal.value = docSnap.data().inputTelurAbnormal;
+        tableContainer.appendChild(sarangElement);
+        index += 1;
+      });
 
-        const updatePatroli = document.querySelector('.updateBtn');
-        // eslint-disable-next-line no-use-before-define
-        updatePatroli.addEventListener('click', simpanUpdateData);
-        updatePatroli.setAttribute('id', id);
-      } else {
-        console.log('No such document!');
-      }
-    };
+      const deleteSarangButtons = document.querySelectorAll('.delete-btn');
+      deleteSarangButtons.forEach((deleteButton) => {
+        deleteButton.addEventListener('click', (event) => {
+          event.stopPropagation();
+          const sarangId = event.currentTarget.id;
+          console.log(sarangId);
 
-    // save update data
-    const simpanUpdateData = async (event) => {
-      const { id } = event.target;
-      const updatePatroli = {
-        tglPenemuan: updatetglPenemuan.value,
-        waktuDitemukan: updatewaktuDitemukan.value,
-        tglPeneluran: updatetglPeneluran.value,
-        perkiraanTglPeneluran: updateperkiraanTglPeneluran.value,
-        inputKetebalanPenutup: updateKetebalanPenutup.value,
-        inputKedalamanDasar: updateKedalamanDasar.value,
-        inputJumlahTelur: updateJumlahTelur.value,
-        inputJenisPenyu01: updateJenisPenyu01.value,
-        inputTelurBaik: updateTelurBaik.value,
-        inputTelurRusak: updateTelurRusak.value,
-        inputTelurMati: updateTelurMati.value,
-        inputTelurAbnormal: updateTelurAbnormal.value,
-      };
+          deleteSarang(sarangId);
+        });
+      });
 
-      await updateDoc(doc(db, 'patroli', id), updatePatroli);
-      swal('Sukses', 'Data berhasil diupdate', 'success');
-    };
+      const updateSarangButtons = document.querySelectorAll('.update-btn');
+      updateSarangButtons.forEach((updateButton) => {
+        updateButton.addEventListener('click', (event) => {
+          event.stopPropagation();
+          const sarangId = event.currentTarget.id;
+
+          updateSarang(sarangId);
+        });
+      });
+
+      const viewSarangButtons = document.querySelectorAll('.view-btn');
+      viewSarangButtons.forEach((detailSarang) => {
+        detailSarang.addEventListener('click', (event) => {
+          event.stopPropagation();
+          const sarangId = event.currentTarget.id;
+
+          viewSarang(sarangId);
+        });
+      });
+    });
 
     // Event Listener
-    addPatroli.addEventListener('click', addData);
+    const addSarangButton = document.getElementById('add-btn');
+    addSarangButton.addEventListener('click', async (event) => {
+      event.preventDefault();
+      addSarang();
+    });
+
+    document.dispatchEvent(new Event(RENDER_EVENT));
   },
 };
 
