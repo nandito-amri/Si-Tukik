@@ -32,6 +32,98 @@ const InkubasiPage = {
           </table>
         </div>
       </div>
+
+      <!-- ====================================== TAMPILAN STATISTIK INKUBASI -->
+      <div class="container my-5">
+      <h3 class="text-center mt-5">Statistik Inkubasi</h3>
+      <div class="row row-cols-1 row-cols-md-4 g-4 mx-5 my-2">
+        <div class="col">
+          <div class="card text-bg-light text-center statistic-card rounded-4" style="max-width: 18rem;">
+            <div class="card-header">Telur Dalam Inkubasi</div>
+            <div class="card-body">
+              <h5 class="card-title">1235</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card text-bg-light text-center statistic-card rounded-4" style="max-width: 18rem;">
+            <div class="card-header">Telur Gagal Menetas</div>
+            <div class="card-body">
+              <h5 class="card-title">65</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card text-bg-light text-center statistic-card rounded-4" style="max-width: 18rem;">
+            <div class="card-header">Mati Saat Menetas</div>
+            <div class="card-body">
+              <h5 class="card-title">23</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card text-bg-light text-center statistic-card rounded-4" style="max-width: 18rem;">
+            <div class="card-header">Telur Berhasil Menetas</div>
+            <div class="card-body">
+              <h5 class="card-title">257</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- ================================= MODAL DETAIL INKUBASI -->
+      <div class="modal modal-xl fade" id="detailInkubasi" tabindex="-1" aria-labelledby="detailInkubasiLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 w-100 text-center" id="exampleModalLabel">Detail Inkubasi</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row row-cols-1 row-cols-md-2 g-4 mx-4 my-2">
+                <div class="col">
+                  <h4>Data Penemuan</h4>
+                  <div class="my-3">
+                  <p>ID Sarang : <span>#001</span></p>
+                  <p>Jenis Penyu : <span>Lekang</span></p>
+                  <p>Tanggal Penemuan : <span>8 November 2022</span></p>
+                  <p>Waktu Penemuan : <span>08 : 21 : 34 PM</span></p>
+                  <p>Tanggal Peneluran Sesungguhnya : <span>7 November 2022</span></p>
+                  <p>Perkiraan Tanggal Peneluran : <span>8 November 2022</span></p>
+                  </div>
+                </div>
+                
+                <div class="col">
+                  <h4>Data Kondisi Telur dan Sarang</h4>
+                  <div class="my-3">
+                  <p>Jumlah Telur : <span>260</span></p>
+                  <p>Telur Baik : <span>240</span></p>
+                  <p>Telur Dirusak : <span>2</span></p>
+                  <p>Telur Mati : <span>8</span></p>
+                  <p>Telur Abnormal : <span>10</span></p>
+                  <p>Ketebalan Sarang : <span>8 cm</span></p>
+                  <p>Ketebalan Dasar : <span>20 cm</span></p>
+                  </div>
+                </div>
+                
+                <div class="col">
+                  <h4>Data Kondisi Menetas</h4>
+                  <div class="my-3">
+                  <p>Telur Berhasil Menetas : <span>-</span></p>
+                  <p>Telur Gagal Menetas : <span>-</span></p>
+                  <p>Mati Saat Baru Menetas : <span>-</span></p>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            <div class="modal-footer mx-auto">
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#catatPenetasanModal">Catat Telur Menetas</button>
+            </div>
+          </div>
+        </div>
+      </div>
     `;
   },
 

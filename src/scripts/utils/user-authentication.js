@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import swal from 'sweetalert';
 
 const Landing = () => {
   document.getElementsByClassName('.container');
@@ -11,11 +12,13 @@ const Landing = () => {
   loginBtn.onclick = () => {
     signInWithEmailAndPassword(getAuth(), email.value, password.value)
       .then(() => {
-        alert('Berhasil Masuk! Selamat Datang, Konservator!');
-        location.reload();
+        swal('Berhasil Masuk', 'Selamat datang Konservator!', 'success');
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
       })
-      .catch((error) => {
-        alert(error);
+      .catch(() => {
+        swal('Gagal Masuk', '', 'error');
       });
   };
 
@@ -39,7 +42,7 @@ const Dashboard = (user) => {
   const element = document.createElement('div');
   element.classList.add('Dashboard');
   element.innerHTML = (`
-  <div class="container mx-auto text-center px-5" id="penyu">
+  <div class="container mx-auto text-center px-5" id="welcomePage">
   <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" alt="Penyu-Sisik" border="0" class="img-fluid rounded tukik" style="width: 30rem">
   <div>
     <h1 class="mt-5">Si Tukik</h1>
@@ -58,8 +61,10 @@ const Dashboard = (user) => {
 
   const logout = document.getElementById('logout');
   logout.onclick = () => signOut(getAuth()).then(() => {
-    alert('Berhasil Logout');
-    location.reload();
+    swal('Berhasil Keluar', '', 'success');
+    setTimeout(() => {
+      location.reload();
+    }, 1000);
   }).catch((err) => alert(err));
 };
 
