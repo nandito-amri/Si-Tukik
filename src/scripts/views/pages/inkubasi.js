@@ -1,3 +1,14 @@
+import { initializeApp } from 'firebase/app';
+// eslint-disable-next-line import/no-unresolved
+import swal from 'sweetalert';
+import {
+  getFirestore,
+  collection,
+  query,
+  getDocs,
+} from 'firebase/firestore';
+import firebaseConfig from '../../globals/firebase-config';
+
 const InkubasiPage = {
   async render() {
     console.log('Inkubasi Page');
@@ -19,21 +30,19 @@ const InkubasiPage = {
           <table class="table table-striped border">
             <thead>
               <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Jenis Penyu</th>
-                <th scope="col">Tanggal Ditemukan</th>
-                <th scope="col">Tanggal Bertelur</th>
-                <th scope="col">Jumlah Telur</th>
-                <th scope="col">Perkiraan Tanggal Menetas</th>
-                <th scope="col">Aksi</th>
+                <th scope="col"><center>No.</center></th>
+                <th scope="col"><center>Jenis Penyu</center></th>
+                <th scope="col"><center>Tanggal Ditemukan</center></th>
+                <th scope="col"><center>Tanggal Bertelur</center></th>
+                <th scope="col"><center>Jumlah Telur</center></th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody id="tabel_inkubasi"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- ====================================== TAMPILAN STATISTIK INKUBASI -->
+      <!-- ============================ ========== TAMPILAN STATISTIK INKUBASI -->
       <div class="container my-5">
       <h3 class="text-center mt-5">Statistik Inkubasi</h3>
       <div class="row row-cols-1 row-cols-md-4 g-4 mx-5 my-2">
@@ -129,6 +138,33 @@ const InkubasiPage = {
 
   async afterRender() {
     // FUngsi dipanggil setelah render()
+    const RENDER_EVENT = 'render-event';
+    const app = initializeApp(firebaseConfig);
+    const database = getFirestore(app);
+    const tableContainer = document.getElementById('tabel_inkubasi');
+
+    document.addEventListener(RENDER_EVENT, async () => {
+      tableContainer.innerHTML = '';
+      const q = query(collection(database, 'patroli'));
+
+      const querySnapshot = await getDocs(q);
+      let index = 1;
+      querySnapshot.forEach((item) => {
+        console.log(item);
+        const sarangElement = document.createElement('tr');
+        sarangElement.innerHTML += `
+        <th scope="row" class="text-center">${index}</th>
+        <td class="text-center">${item.data().inputJenisPenyu01}</td>
+        <td class="text-center">${item.data().tglPenemuan}</td>
+        <td class="text-center">${item.data().tglPeneluran}</td>
+        <td class="text-center">${item.data().inputJumlahTelur}</td>
+        `;
+
+        tableContainer.appendChild(sarangElement);
+        index += 1;
+      });
+    });
+    document.dispatchEvent(new Event(RENDER_EVENT));
   },
 };
 
