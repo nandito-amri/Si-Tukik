@@ -86,7 +86,16 @@ body {
 }
   
 .linkButton:hover {
-  color: #61764B
+  color: #61764B;
+}
+
+.linkButtonGhost {
+  color: #61764B;
+  text-decoration: none;
+}
+
+.linkButtonGhost:hover {
+  color: white;
 }
 
 .pagination {
@@ -138,4 +147,8 @@ body {
 .detailPenyuMenetas {
   width: 16rem;
   margin: auto
+}
+
+main {
+  padding-bottom: 3rem;
 }
