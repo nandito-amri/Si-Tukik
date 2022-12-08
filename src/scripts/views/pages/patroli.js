@@ -422,9 +422,9 @@ const PatroliPage = {
       || inputTelurRusak === ''
       || inputTelurMati === ''
       || inputTelurAbnormal === ''
-      || jumlahTelurMenetas === ''
-      || jumlahTelurGagal === ''
-      || jumlahMatiMenetas === ''
+      // || jumlahTelurMenetas === ''
+      // || jumlahTelurGagal === ''
+      // || jumlahMatiMenetas === ''
 
       ) {
         swal('Harap isi kolom yang kosong', '', 'warning');
@@ -557,7 +557,7 @@ const PatroliPage = {
       const querySnapshot = await getDocs(q);
       let index = 1;
       querySnapshot.forEach((item) => {
-        console.log(item);
+        // console.log(item);
         const sarangElement = document.createElement('tr');
         sarangElement.innerHTML += `
             <th scope="row" class="text-center">${index}</th>
