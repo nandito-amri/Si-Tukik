@@ -38,7 +38,7 @@ const StatistikPage = {
         <div class="card statistic-card text-center rounded-5" style="max-width: 18rem;">
           <div class="card-header">Telur Menetas</div>
           <div class="card-body">
-            <h5 class="card-title" id="telurMenetas">642</h5>
+            <h5 class="card-title" id="telurMenetas"></h5>
           </div>
         </div>
       </div>
@@ -46,7 +46,7 @@ const StatistikPage = {
         <div class="card statistic-card text-center rounded-5" style="max-width: 18rem;">
           <div class="card-header">Telur Gagal Menetas</div>
           <div class="card-body">
-            <h5 class="card-title" id="telurGagal">642</h5>
+            <h5 class="card-title" id="telurGagal"></h5>
           </div>
         </div>
       </div>
@@ -128,6 +128,8 @@ const StatistikPage = {
 
     const sarangDitemukan = document.getElementById('sarangDitemukan');
     const telurDitemukan = document.getElementById('telurDitemukan');
+    const telurMenetas = document.getElementById('telurMenetas');
+    const telurGagal = document.getElementById('telurGagal');
 
     document.addEventListener(RENDER_EVENT, async () => {
       const coll = collection(database, 'patroli');
@@ -140,11 +142,21 @@ const StatistikPage = {
 
       const querySnapshot = await getDocs(q);
 
-      let jumlahTelur = null;
+      let jumlahTelurTotal = null;
+      let telurMenetasTotal = null;
+      let telurGagalTotal = null;
       querySnapshot.forEach((item) => {
         const x = Math.floor(item.data().inputJumlahTelur);
-        jumlahTelur += x;
-        telurDitemukan.innerHTML = `${jumlahTelur}`;
+        jumlahTelurTotal += x;
+        telurDitemukan.innerHTML = `${jumlahTelurTotal}`;
+
+        const menetas = Math.floor(item.data().jumlahTelurMenetas);
+        telurMenetasTotal += menetas;
+        telurMenetas.innerHTML = `${telurMenetasTotal}`;
+
+        const gagal = Math.floor(item.data().jumlahTelurGagal);
+        telurGagalTotal += gagal;
+        telurGagal.innerHTML = `${telurGagalTotal}`;
       });
     });
 
