@@ -152,3 +152,12 @@ body {
 main {
   padding-bottom: 3rem;
 }
+
+li {
+  list-style-type: none;
+}
+
+#profil-konservator {
+  background-color: #61764B;
+  color: #eee;
+}

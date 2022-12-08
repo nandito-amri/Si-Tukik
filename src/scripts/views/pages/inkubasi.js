@@ -46,45 +46,6 @@ const InkubasiPage = {
         </div>
       </div>
 
-      <!-- ============================ ========== TAMPILAN STATISTIK INKUBASI -->
-      <div class="container my-5">
-      <h3 class="text-center mt-5">Statistik Inkubasi</h3>
-      <div class="row row-cols-1 row-cols-md-4 g-4 mx-5 my-2">
-        <div class="col">
-          <div class="card text-bg-light text-center statistic-card rounded-4" style="max-width: 18rem;">
-            <div class="card-header">Telur Dalam Inkubasi</div>
-            <div class="card-body">
-              <h5 class="card-title">1235</h5>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card text-bg-light text-center statistic-card rounded-4" style="max-width: 18rem;">
-            <div class="card-header">Telur Gagal Menetas</div>
-            <div class="card-body">
-              <h5 class="card-title">65</h5>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card text-bg-light text-center statistic-card rounded-4" style="max-width: 18rem;">
-            <div class="card-header">Mati Saat Menetas</div>
-            <div class="card-body">
-              <h5 class="card-title">23</h5>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card text-bg-light text-center statistic-card rounded-4" style="max-width: 18rem;">
-            <div class="card-header">Telur Berhasil Menetas</div>
-            <div class="card-body">
-              <h5 class="card-title">257</h5>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-
       <!--  ================================= MODAL CATAT TELUR MENETAS   -->
 <div class="modal fade" id="catatPenetasanModal" tabindex="-1" aria-labelledby="catatPenetasanModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -254,7 +215,7 @@ const InkubasiPage = {
       const querySnapshot = await getDocs(q);
       let index = 1;
       querySnapshot.forEach((item) => {
-        console.log(item);
+        // console.log(item);
         const sarangElement = document.createElement('tr');
         sarangElement.innerHTML += `
         <th scope="row" class="text-center">${index}</th>

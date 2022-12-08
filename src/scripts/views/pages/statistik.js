@@ -1,3 +1,17 @@
+/* eslint-disable max-len */
+import { initializeApp } from 'firebase/app';
+import {
+  getFirestore,
+  collection,
+  query,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+  getCountFromServer,
+} from 'firebase/firestore';
+import firebaseConfig from '../../globals/firebase-config';
+
 const StatistikPage = {
   async render() {
     return `
@@ -8,7 +22,7 @@ const StatistikPage = {
         <div class="card statistic-card text-center rounded-5" style="max-width: 18rem;">
           <div class="card-header">Sarang Ditemukan</div>
           <div class="card-body">
-            <h5 class="card-title" id="sarangDitemukan">642</h5>
+            <h5 class="card-title" id="sarangDitemukan"></h5>
           </div>
         </div>
       </div>
@@ -16,7 +30,7 @@ const StatistikPage = {
         <div class="card statistic-card text-center rounded-5" style="max-width: 18rem;">
           <div class="card-header">Telur Ditemukan</div>
           <div class="card-body">
-            <h5 class="card-title" id="telurDitemukan">642</h5>
+            <h5 class="card-title" id="telurDitemukan"></h5>
           </div>
         </div>
       </div>
@@ -24,7 +38,7 @@ const StatistikPage = {
         <div class="card statistic-card text-center rounded-5" style="max-width: 18rem;">
           <div class="card-header">Telur Menetas</div>
           <div class="card-body">
-            <h5 class="card-title" id="telurMenetas">642</h5>
+            <h5 class="card-title" id="telurMenetas"></h5>
           </div>
         </div>
       </div>
@@ -32,7 +46,7 @@ const StatistikPage = {
         <div class="card statistic-card text-center rounded-5" style="max-width: 18rem;">
           <div class="card-header">Telur Gagal Menetas</div>
           <div class="card-body">
-            <h5 class="card-title" id="telurGagal">642</h5>
+            <h5 class="card-title" id="telurGagal"></h5>
           </div>
         </div>
       </div>
@@ -108,6 +122,45 @@ const StatistikPage = {
 
   async afterRender() {
     // FUngsi dipanggil setelah render()
+    const RENDER_EVENT = 'render-event';
+    const app = initializeApp(firebaseConfig);
+    const database = getFirestore(app);
+
+    const sarangDitemukan = document.getElementById('sarangDitemukan');
+    const telurDitemukan = document.getElementById('telurDitemukan');
+    const telurMenetas = document.getElementById('telurMenetas');
+    const telurGagal = document.getElementById('telurGagal');
+
+    document.addEventListener(RENDER_EVENT, async () => {
+      const coll = collection(database, 'patroli');
+      const snapshot = await getCountFromServer(coll);
+      console.log(snapshot.data().count);
+
+      sarangDitemukan.innerHTML = `${snapshot.data().count}`;
+
+      const q = query(collection(database, 'patroli'));
+
+      const querySnapshot = await getDocs(q);
+
+      let jumlahTelurTotal = null;
+      let telurMenetasTotal = null;
+      let telurGagalTotal = null;
+      querySnapshot.forEach((item) => {
+        const x = Math.floor(item.data().inputJumlahTelur);
+        jumlahTelurTotal += x;
+        telurDitemukan.innerHTML = `${jumlahTelurTotal}`;
+
+        const menetas = Math.floor(item.data().jumlahTelurMenetas);
+        telurMenetasTotal += menetas;
+        telurMenetas.innerHTML = `${telurMenetasTotal}`;
+
+        const gagal = Math.floor(item.data().jumlahTelurGagal);
+        telurGagalTotal += gagal;
+        telurGagal.innerHTML = `${telurGagalTotal}`;
+      });
+    });
+
+    document.dispatchEvent(new Event(RENDER_EVENT));
   },
 };
 
