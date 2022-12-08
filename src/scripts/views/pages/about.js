@@ -6,7 +6,7 @@ const AboutUs = {
         <div class="row row-cols-1 row-cols-md-2 g-4 mx-5 my-2">
         <div class="col">
             <div class="mx-auto text-center">
-            <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" alt="Penyu-Sisik" border="0" class="img-fluid rounded-4" style="width: 25rem">
+            <img src="https://i.ibb.co/njnsvjs/dokumentasi-1.jpg" alt="Penyu-Sisik" border="0" class="img-fluid rounded-4" style="width: 25rem">
             </div>
         </div>
         <div >
