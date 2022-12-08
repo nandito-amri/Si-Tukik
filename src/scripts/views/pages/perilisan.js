@@ -28,7 +28,7 @@ const PerilisanPage = {
             <th scope="col">Aksi</th>
             </tr>
         </thead>
-        <tbody id="tabel_patroli"></tbody>
+        <tbody id="tabel_periisan"></tbody>
         </table>
         </div>
       </div>

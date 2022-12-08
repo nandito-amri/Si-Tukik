@@ -406,7 +406,9 @@ const PatroliPage = {
       const inputTelurRusak = document.getElementById('inputTelurRusak').value;
       const inputTelurMati = document.getElementById('inputTelurMati').value;
       const inputTelurAbnormal = document.getElementById('inputTelurAbnormal').value;
-
+      const jumlahTelurMenetas = '';
+      const jumlahTelurGagal = '';
+      const jumlahMatiMenetas = '';
       if (
         tglPenemuan === ''
       || waktuDitemukan === ''
@@ -420,6 +422,10 @@ const PatroliPage = {
       || inputTelurRusak === ''
       || inputTelurMati === ''
       || inputTelurAbnormal === ''
+      || jumlahTelurMenetas === ''
+      || jumlahTelurGagal === ''
+      || jumlahMatiMenetas === ''
+
       ) {
         swal('Harap isi kolom yang kosong', '', 'warning');
       } else {
@@ -436,6 +442,9 @@ const PatroliPage = {
           inputTelurRusak,
           inputTelurMati,
           inputTelurAbnormal,
+          jumlahTelurMenetas,
+          jumlahTelurGagal,
+          jumlahMatiMenetas,
         };
 
         try {
@@ -556,7 +565,6 @@ const PatroliPage = {
             <td class="text-center">${item.data().waktuDitemukan}</td>
             <td class="text-center">${item.data().tglPeneluran}</td>
             <td class="text-center">${item.data().perkiraanTglPeneluran}</td>
-            <td class="text-center">${item.data().inputJenisPenyu01}</td>
             <td class="text-center">
               <button type="button" class="btn btn-warning px-2 rounded-4 update-btn" data-bs-toggle="modal" data-bs-target="#modalUpdateData" title="Ubah Data" id=${item.id}><i class="bi bi-pencil-square action-btn"></i></button>
               <button type="button" class="btn btn-danger px-2 rounded-4 delete-btn" title="Hapus Data" id=${item.id}><i class="bi bi-trash-fill"></i></button>
