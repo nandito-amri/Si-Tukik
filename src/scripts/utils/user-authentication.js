@@ -37,7 +37,7 @@ const Landing = () => {
 const Dashboard = (user) => {
   const container = document.querySelector('.container');
   const masukBtn = document.querySelector('[data-button="login1"]');
-  const logoutBtn = document.getElementById('logout-button');
+  const profileDropdown = document.getElementById('profil-konservator');
   const footer = document.getElementById('footer');
   const element = document.createElement('div');
   element.classList.add('Dashboard');
@@ -54,7 +54,7 @@ const Dashboard = (user) => {
   </div>
     `);
   masukBtn.style.display = 'none';
-  logoutBtn.classList.remove('d-none');
+  profileDropdown.classList.remove('d-none');
   footer.classList.add('d-none');
   container.innerHTML = '';
   container.appendChild(element);
