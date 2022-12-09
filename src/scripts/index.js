@@ -12,7 +12,7 @@ const app = new App({
 
 onAuthStateChanged(getAuth(), (user) => {
   if (user) {
-    Dashboard(user);
+    Dashboard();
   } else {
     Landing();
   }
