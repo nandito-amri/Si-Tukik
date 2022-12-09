@@ -9,6 +9,7 @@ import {
   getDoc,
   updateDoc,
   getCountFromServer,
+  where,
 } from 'firebase/firestore';
 import firebaseConfig from '../../globals/firebase-config';
 
@@ -131,6 +132,18 @@ const StatistikPage = {
     const telurMenetas = document.getElementById('telurMenetas');
     const telurGagal = document.getElementById('telurGagal');
 
+    // Lekang
+    const sarangDitemukanLekang = document.getElementById('sarangDitemukanLekang');
+    const telurDitemukanLekang = document.getElementById('telurDitemukanLekang');
+    const telurMenetasLekang = document.getElementById('telurMenetasLekang');
+    const telurGagalLekang = document.getElementById('telurGagalLekang');
+
+    // Sisik
+    const sarangDitemukanSisik = document.getElementById('sarangDitemukanSisik');
+    const telurDitemukanSisik = document.getElementById('telurDitemukanSisik');
+    const telurMenetasSisik = document.getElementById('telurMenetasSisik');
+    const telurGagalSisik = document.getElementById('telurGagalSisik');
+
     document.addEventListener(RENDER_EVENT, async () => {
       const coll = collection(database, 'patroli');
       const snapshot = await getCountFromServer(coll);
@@ -157,6 +170,60 @@ const StatistikPage = {
         const gagal = Math.floor(item.data().jumlahTelurGagal);
         telurGagalTotal += gagal;
         telurGagal.innerHTML = `${telurGagalTotal}`;
+
+        // console.log(new Date(`${item.data().tglPenemuan}`).getFullYear());
+      });
+
+      // Lekang
+      const queryLekang = query(coll, where('inputJenisPenyu01', '==', 'Lekang'));
+      const lekang = await getCountFromServer(queryLekang);
+      // console.log(lekang.data().count);
+
+      sarangDitemukanLekang.innerHTML = `${lekang.data().count}`;
+
+      const querySnapshotLekang = await getDocs(queryLekang);
+      let jumlahTelurTotalLekang = null;
+      let telurMenetasTotalLekang = null;
+      let telurGagalTotalLekang = null;
+      querySnapshotLekang.forEach((item) => {
+        const telurLekang = Math.floor(item.data().inputJumlahTelur);
+        jumlahTelurTotalLekang += telurLekang;
+        // console.log(jumlahTelurTotalLekang);
+        telurDitemukanLekang.innerHTML = `${jumlahTelurTotalLekang}`;
+
+        const menetasLekang = Math.floor(item.data().jumlahTelurMenetas);
+        telurMenetasTotalLekang += menetasLekang;
+        telurMenetasLekang.innerHTML = `${telurMenetasTotalLekang}`;
+
+        const gagalLekang = Math.floor(item.data().jumlahTelurGagal);
+        telurGagalTotalLekang += gagalLekang;
+        telurGagalLekang.innerHTML = `${telurGagalTotalLekang}`;
+      });
+
+      // Sisik
+      const querySisik = query(coll, where('inputJenisPenyu01', '==', 'Sisik'));
+      const sisik = await getCountFromServer(querySisik);
+      // console.log(sisik.data().count);
+
+      sarangDitemukanSisik.innerHTML = `${sisik.data().count}`;
+
+      const querySnapshotSisik = await getDocs(querySisik);
+      let jumlahTelurTotalSisik = null;
+      let telurMenetasTotalSisik = null;
+      let telurGagalTotalSisik = null;
+      querySnapshotSisik.forEach((item) => {
+        const telurSisik = Math.floor(item.data().inputJumlahTelur);
+        jumlahTelurTotalSisik += telurSisik;
+        // console.log(jumlahTelurTotalLekang);
+        telurDitemukanSisik.innerHTML = `${jumlahTelurTotalSisik}`;
+
+        const menetasSisik = Math.floor(item.data().jumlahTelurMenetas);
+        telurMenetasTotalSisik += menetasSisik;
+        telurMenetasSisik.innerHTML = `${telurMenetasTotalSisik}`;
+
+        const gagalSisik = Math.floor(item.data().jumlahTelurGagal);
+        telurGagalTotalSisik += gagalSisik;
+        telurGagalSisik.innerHTML = `${telurGagalTotalSisik}`;
       });
     });
 
