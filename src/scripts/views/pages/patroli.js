@@ -9,13 +9,10 @@ import {
   getDoc,
   query,
   getDocs,
-  onSnapshot,
   deleteDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
 import firebaseConfig from '../../globals/firebase-config';
-import KonservasiDbSource from '../../data/konservasidb-source';
 
 const PatroliPage = {
   async render() {
@@ -385,12 +382,6 @@ const PatroliPage = {
     // Get database from firestore
     const app = initializeApp(firebaseConfig);
     const database = getFirestore(app);
-
-    // Read Data
-    // const readData = async () => {
-    //   tableContainer.innerHTML = '';
-
-    // };
 
     // Add data (menambahkan sarang)
     const addSarang = async () => {
