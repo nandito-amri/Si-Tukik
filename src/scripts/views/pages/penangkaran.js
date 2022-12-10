@@ -5,9 +5,11 @@ import {
   addDoc,
   getFirestore,
   collection,
+  where,
   doc,
   getDoc,
   query,
+  getCountFromServer,
   getDocs,
   onSnapshot,
   deleteDoc,
@@ -38,7 +40,7 @@ const PenangkaranPage = {
             <div class="card text-bg-light text-center mx-auto statistic-card rounded-4" style="max-width: 18rem;">
               <div class="card-header">Total Tukik dalam Penangakran</div>
               <div class="card-body">
-                <h5 class="card-title">1235</h5>
+                <h5 class="card-title" id="jumlahLekang"></h5>
               </div>
             </div>
           </div>
@@ -46,7 +48,7 @@ const PenangkaranPage = {
             <div class="card text-bg-light text-center mx-auto statistic-card rounded-4" style="max-width: 18rem;">
               <div class="card-header">Mati dalam Penangkaran</div>
               <div class="card-body">
-                <h5 class="card-title">65</h5>
+                <h5 class="card-title" id="lekangMati"></h5>
               </div>
             </div>
           </div>
@@ -59,7 +61,7 @@ const PenangkaranPage = {
             <div class="card text-bg-light text-center mx-auto statistic-card rounded-4" style="max-width: 18rem;">
               <div class="card-header">Total Tukik dalam Penangkaran</div>
               <div class="card-body">
-                <h5 class="card-title">1235</h5>
+                <h5 class="card-title" id="jumlahSisik"></h5>
               </div>
             </div>
           </div>
@@ -67,7 +69,7 @@ const PenangkaranPage = {
             <div class="card text-bg-light text-center mx-auto statistic-card rounded-4" style="max-width: 18rem;">
               <div class="card-header">Mati dalam Penangkaran</div>
               <div class="card-body">
-                <h5 class="card-title">65</h5>
+                <h5 class="card-title" id="sisikMati"></h5>
               </div>
             </div>
           </div>
@@ -100,8 +102,8 @@ const PenangkaranPage = {
                 <div class="input-group mb-3">
                   <select class="form-select" id="inputJenisPenyu">
                     <option selected>Jenis Penyu</option>
-                    <option value="1">Lekang</option>
-                    <option value="2">Sisik</option>
+                    <option value="Lekang">Lekang</option>
+                    <option value="Sisik">Sisik</option>
                   </select>
                 </div>
                   </div>
@@ -135,7 +137,7 @@ const PenangkaranPage = {
             <div class="modal-body">
               <p class="text-center pb-2">Isikan data berikut ketika akan melakukan perilisan tukik</p>
               
-              <form id="addrilis>
+              <form class="addrilis">
                 <div class="container my-3">
               <div class="row row-cols-2">
                 <div class="col">
@@ -157,9 +159,9 @@ const PenangkaranPage = {
                 <div class="input-group mb-3">
                   <select class="form-select" id="cuaca">
                     <option selected>Kondisi Cuaca...</option>
-                    <option value="1">Cerah</option>
-                    <option value="2">Mendung</option>
-                    <option value="3">Hujan</option>
+                    <option value="Cerah">Cerah</option>
+                    <option value="Mendung">Mendung</option>
+                    <option value="Hujan">Hujan</option>
                   </select>
                 </div>
                 </div>
@@ -173,8 +175,8 @@ const PenangkaranPage = {
                 <div class="input-group mb-3">
                   <select class="form-select" id="jenisPenyu">
                     <option selected>Jenis Penyu</option>
-                    <option value="1">Lekang</option>
-                    <option value="2">Sisik</option>
+                    <option value="Lekang">Lekang</option>
+                    <option value="Sisik">Sisik</option>
                   </select>
                 </div>
                   </div>
@@ -191,7 +193,7 @@ const PenangkaranPage = {
       </div>
             <div class="modal-footer mx-auto">
               <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Batal</button>
-              <button type="button" class="btn btn-primary">Simpan</button>
+              <button type="button" class="btn btn-primary" id="saveBtn">Simpan</button>
             </div>
           </div>
         </div>
@@ -206,47 +208,72 @@ const PenangkaranPage = {
     // Get database from firestore
     const app = initializeApp(firebaseConfig);
     const database = getFirestore(app);
+    const coll = collection(database, 'patroli');
 
-    // Add data (menambahkan sarang)
-    const addrilis = async () => {
-      const tglPerilisan = document.getElementById('tglPerilisan').value;
-      const waktuPerilisan = document.getElementById('waktuPerilisan').value;
-      const cuaca = document.getElementById('cuaca').value;
-      const jenisPenyu = document.getElementById('jenisPenyu').value;
-      const jumlahTukikRilis = document.getElementById('jumlahTukikRilis').value;
+    // lekang
+    const jumlahLekang = document.getElementById('jumlahLekang');
+    const queryLekang = query(coll, where('inputJenisPenyu01', '==', 'Lekang'));
+    // const lekang = await getCountFromServer(queryLekang);
+    const lekangMati = document.getElementById('lekangMati');
+    let telurGagalTotalLekang = null;
+    let telurMenetasTotalLekang = null;
+    let telurGagalTotalSisik = null;
+    let telurMenetasTotalSisik = null;
+    // show data lekang
+    // jumlahLekang.innerHTML = `${lekang.data().count}`;
+    const querySnapshotLekang = await getDocs(queryLekang);
+    querySnapshotLekang.forEach((item) => {
+      const totalLekang = Math.floor(item.data().jumlahTelurMenetas);
+      telurMenetasTotalLekang += totalLekang;
+      jumlahLekang.innerHTML = `${telurMenetasTotalLekang}`;
 
-      if (
-        tglPerilisan === ''
-      || waktuPerilisan === ''
-      || cuaca === ''
-      || jenisPenyu === ''
-      || jumlahTukikRilis === ''
-      ) {
-        swal('Harap isi kolom yang kosong', '', 'warning');
-      } else {
-        const newRilis = {
-          tglPerilisan,
-          waktuPerilisan,
-          cuaca,
-          jenisPenyu,
-          jumlahTukikRilis,
-        };
+      const gagalLekang = Math.floor(item.data().jumlahTelurGagal);
+      telurGagalTotalLekang += gagalLekang;
+      lekangMati.innerHTML = `${telurGagalTotalLekang}`;
+    });
 
-        try {
-          await addDoc(collection(database, 'perilisan'), newRilis);
-          swal('Berhasil Menambahkan data', '', 'success');
-        } catch (error) {
-          console.error('Error adding document: ', error);
-        }
-      }
+    // Sisik
+    const sisikMati = document.getElementById('sisikMati');
+    const jumlahSisik = document.getElementById('jumlahSisik');
+    const querySisik = query(coll, where('inputJenisPenyu01', '==', 'Sisik'));
+    const sisik = await getCountFromServer(querySisik);
 
-      document.dispatchEvent(new Event(RENDER_EVENT));
-    };
-    // Event Listener
-    const addRilisButton = document.getElementById('add-btn');
-    addRilisButton.addEventListener('click', async (event) => {
-      event.preventDefault();
-      addrilis();
+    // show data sisik
+    jumlahSisik.innerHTML = `${sisik.data().count}`;
+    const querySnapshotSisik = await getDocs(querySisik);
+    querySnapshotSisik.forEach((item) => {
+      const menetasSisik = Math.floor(item.data().jumlahTelurMenetas);
+      telurMenetasTotalSisik += menetasSisik;
+      jumlahSisik.innerHTML = `${telurMenetasTotalSisik}`;
+
+      const gagalSisik = Math.floor(item.data().jumlahTelurGagal);
+      telurGagalTotalSisik += gagalSisik;
+      sisikMati.innerHTML = `${telurGagalTotalSisik}`;
+    });
+
+    // const tglPerilisan = document.getElementById('tglPerilisan');
+    // const waktuPerilisan = document.getElementById('waktuPerilisan');
+    // const cuaca = document.getElementById('cuaca');
+    // const jenisPenyu = document.getElementById('jenisPenyu');
+    // const jumlahTukikRilis = document.getElementById('jumlahTukikRilis');
+
+    const colRef = collection(database, 'rilis');
+    const addRilisForm = document.querySelector('.addrilis');
+    const btnSave = document.getElementById('saveBtn');
+    btnSave.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      addDoc(colRef, {
+        tglPerilisan: addRilisForm.tglPerilisan.value,
+        waktuPerilisan: addRilisForm.waktuPerilisan.value,
+        cuaca: addRilisForm.cuaca.value,
+        jenisPenyu: addRilisForm.jenisPenyu.value,
+        jumlahTukikRilis: addRilisForm.jumlahTukikRilis.value,
+      })
+        .then(() => {
+          swal('Berhasil', '', 'success');
+          addRilisForm.reset();
+        });
     });
   },
 };
