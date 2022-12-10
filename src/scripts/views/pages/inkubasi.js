@@ -9,6 +9,7 @@ import {
   doc,
   getDoc,
   updateDoc,
+  addDoc,
 } from 'firebase/firestore';
 import firebaseConfig from '../../globals/firebase-config';
 

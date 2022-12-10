@@ -18,7 +18,7 @@ const Landing = () => {
       swal(`Gagal masuk \n ${error}`, '', 'error');
     }
   };
-}
+};
 
 const Dashboard = () => {
   const container = document.querySelector('.container');
