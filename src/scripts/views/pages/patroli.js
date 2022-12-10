@@ -11,6 +11,7 @@ import {
   getDocs,
   deleteDoc,
   updateDoc,
+  serverTimestamp,
 } from 'firebase/firestore';
 import firebaseConfig from '../../globals/firebase-config';
 
@@ -400,6 +401,7 @@ const PatroliPage = {
       const jumlahTelurMenetas = '';
       const jumlahTelurGagal = '';
       const jumlahMatiMenetas = '';
+      const createdAt = serverTimestamp();
       if (
         tglPenemuan === ''
       || waktuDitemukan === ''
@@ -436,6 +438,7 @@ const PatroliPage = {
           jumlahTelurMenetas,
           jumlahTelurGagal,
           jumlahMatiMenetas,
+          createdAt,
         };
 
         try {
@@ -544,18 +547,18 @@ const PatroliPage = {
     document.addEventListener(RENDER_EVENT, async () => {
       tableContainer.innerHTML = '';
       const q = query(collection(database, 'patroli'));
-
       const querySnapshot = await getDocs(q);
+      console.log(querySnapshot.docs);
       let index = 1;
-      querySnapshot.forEach((item) => {
-        // console.log(item);
+      querySnapshot.docs.reverse().forEach((item) => {
+        console.log(item);
         const sarangElement = document.createElement('tr');
         sarangElement.innerHTML += `
             <th scope="row" class="text-center">${index}</th>
-            <td>${item.data().tglPenemuan}</td>
-            <td class="text-center">${item.data().waktuDitemukan}</td>
-            <td class="text-center">${item.data().tglPeneluran}</td>
-            <td class="text-center">${item.data().perkiraanTglPeneluran}</td>
+            <td>${item._document.data.value.mapValue.fields.tglPenemuan.stringValue}</td>
+            <td class="text-center">${item._document.data.value.mapValue.fields.waktuDitemukan.stringValue}</td>
+            <td class="text-center">${item._document.data.value.mapValue.fields.tglPeneluran.stringValue}</td> 
+            <td class="text-center">${item._document.data.value.mapValue.fields.perkiraanTglPeneluran.stringValue}</td>
             <td class="text-center">
               <button type="button" class="btn btn-warning px-2 rounded-4 update-btn" data-bs-toggle="modal" data-bs-target="#modalUpdateData" title="Ubah Data" id=${item.id}><i class="bi bi-pencil-square action-btn"></i></button>
               <button type="button" class="btn btn-danger px-2 rounded-4 delete-btn" title="Hapus Data" id=${item.id}><i class="bi bi-trash-fill"></i></button>
