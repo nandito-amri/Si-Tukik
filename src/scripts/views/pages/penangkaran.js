@@ -1,3 +1,4 @@
+/* eslint-disable no-multi-assign */
 import { initializeApp } from 'firebase/app';
 // eslint-disable-next-line import/no-unresolved
 import swal from 'sweetalert';
@@ -120,7 +121,7 @@ const PenangkaranPage = {
       </div>
             <div class="modal-footer mx-auto">
               <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Batal</button>
-              <button type="button" class="btn btn-primary">Simpan</button>
+              <button type="button" class="btn btn-primary" id="save">Simpan</button>
             </div>
           </div>
         </div>
@@ -228,7 +229,8 @@ const PenangkaranPage = {
       jumlahLekang.innerHTML = `${telurMenetasTotalLekang}`;
 
       const gagalLekang = Math.floor(item.data().jumlahTelurGagal);
-      telurGagalTotalLekang += gagalLekang;
+      let gagalLekang1 = Math.floor(item.data().jumlahMatiMenetas);
+      telurGagalTotalLekang += gagalLekang1 += gagalLekang;
       lekangMati.innerHTML = `${telurGagalTotalLekang}`;
     });
 
@@ -247,7 +249,8 @@ const PenangkaranPage = {
       jumlahSisik.innerHTML = `${telurMenetasTotalSisik}`;
 
       const gagalSisik = Math.floor(item.data().jumlahTelurGagal);
-      telurGagalTotalSisik += gagalSisik;
+      let gagalSisik1 = Math.floor(item.data().jumlahMatiMenetas);
+      telurGagalTotalSisik += gagalSisik1 += gagalSisik;
       sisikMati.innerHTML = `${telurGagalTotalSisik}`;
     });
 
@@ -275,6 +278,11 @@ const PenangkaranPage = {
           addRilisForm.reset();
         });
     });
+    const edit = document.getElementById('save');
+
+    edit.onclick = () => {
+      alert('tes');
+    };
   },
 };
 
