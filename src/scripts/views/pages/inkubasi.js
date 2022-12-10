@@ -83,8 +83,8 @@ const InkubasiPage = {
         </form>
       </div>
       <div class="modal-footer mx-auto">
-        <button type="button" class="btn btn-outline-primary">Batal</button>
-        <button type="button" id="updateBtn" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn ghost-button" data-bs-dismiss="modal">Batal</button>
+        <button type="button" id="updateBtn" class="btn filled-button" data-bs-dismiss="modal">Simpan</button>
       </div>
     </div>
   </div>
@@ -138,7 +138,7 @@ const InkubasiPage = {
               </div>
             </div>
             <div class="modal-footer mx-auto">
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#catatPenetasanModal">Catat Telur Menetas</button>
+              <button type="button" class="btn filled-button data-bs-toggle="modal" data-bs-target="#catatPenetasanModal">Catat Telur Menetas</button>
             </div>
           </div>
         </div>

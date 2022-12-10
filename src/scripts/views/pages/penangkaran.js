@@ -193,8 +193,9 @@ const PenangkaranPage = {
               </form>
       </div>
             <div class="modal-footer mx-auto">
-              <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Batal</button>
-              <button type="button" class="btn btn-primary" id="saveBtn">Simpan</button>
+            <button type="button" class="btn ghost-button" data-bs-dismiss="modal">Batal</button>
+            <button type="button" class="btn filled-button" data-bs-dismiss="modal" id="saveBtn">Simpan</button>
+    
             </div>
           </div>
         </div>
