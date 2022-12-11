@@ -26,7 +26,7 @@ const PerilisanPage = {
         </ul>
         </nav>
 
-        <h2 class="mx-5 my-4">Data Telur Penyu dalam Inkubasi</h2>
+        <h2 class="mx-5 my-4">Data Perilisan Penyu</h2>
 
         
         <div class="table-responsive mx-5 my-4">
@@ -217,7 +217,7 @@ const PerilisanPage = {
         updateButton.addEventListener('click', (event) => {
           event.stopPropagation();
           const sarangId = event.currentTarget.id;
-          
+
           updateRilis(sarangId);
         });
       });

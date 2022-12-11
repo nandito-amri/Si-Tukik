@@ -202,12 +202,12 @@ const PenangkaranPage = {
 
     const penyuLekang = await getDoc(doc(database, 'penangkaran', 'Lekang'));
     const penyuSisik = await getDoc(doc(database, 'penangkaran', 'Sisik'));
-    
+
     const editDataPenangkaran = async () => {
       const jenisPenyu = document.getElementById('inputJenisPenyu').value;
       const jumlahTukikMati = Number(document.getElementById('jumlahTukikMati').value);
       console.log(jenisPenyu);
-      
+
       if (jenisPenyu === 'Lekang') {
         let updateTukikDalamPenangkaran = penyuLekang.data().jumlahTukikDalamPenangkaran;
         updateTukikDalamPenangkaran -= jumlahTukikMati;
@@ -241,7 +241,7 @@ const PenangkaranPage = {
         document.dispatchEvent(new Event(RENDER_EVENT));
         swal('Sukses', 'Data berhasil diupdate', 'success');
       } else {
-        swal('Jenis Penyu Tidak Ditemukan', '', 'warning')
+        swal('Jenis Penyu Tidak Ditemukan', '', 'warning');
       }
     };
 
@@ -271,7 +271,7 @@ const PenangkaranPage = {
             cuaca: addRilisForm.cuaca.value,
             jenisPenyu: addRilisForm.jenisPenyu.value,
             jumlahTukikRilis: addRilisForm.jumlahTukikRilis.value,
-          }
+          };
 
           await addDoc(collection(database, 'rilis'), newRilis);
         }
@@ -281,35 +281,35 @@ const PenangkaranPage = {
           swal('Jumlah Tukik kurang', '', 'warning');
         } else {
           updateTukikDalamPenangkaran -= jumlahTukikDirilis;
-  
+
           const updatePenangkaran = {
             jumlahTukikDalamPenangkaran: updateTukikDalamPenangkaran,
           };
-  
+
           await updateDoc(doc(database, 'penangkaran', 'Sisik'), updatePenangkaran);
-  
+
           const newRilis = {
             tglPerilisan: addRilisForm.tglPerilisan.value,
             waktuPerilisan: addRilisForm.waktuPerilisan.value,
             cuaca: addRilisForm.cuaca.value,
             jenisPenyu: addRilisForm.jenisPenyu.value,
             jumlahTukikRilis: addRilisForm.jumlahTukikRilis.value,
-          }
-  
+          };
+
           await addDoc(collection(database, 'rilis'), newRilis);
         }
-      };
+      }
 
       document.dispatchEvent(new Event(RENDER_EVENT));
       swal('Berhasil', '', 'success');
-    }
-    
+    };
+
     document.addEventListener(RENDER_EVENT, async () => {
       const jumlahLekang = document.getElementById('jumlahLekang');
       const jumlahSisik = document.getElementById('jumlahSisik');
       const lekangMati = document.getElementById('lekangMati');
       const sisikMati = document.getElementById('sisikMati');
-    
+
       jumlahLekang.innerHTML = '';
       jumlahSisik.innerHTML = '';
       lekangMati.innerHTML = '';

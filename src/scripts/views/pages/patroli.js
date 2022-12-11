@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { initializeApp } from 'firebase/app';
 import swal from 'sweetalert';
 import {

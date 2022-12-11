@@ -150,7 +150,7 @@ const InkubasiPage = {
 
     const tableContainer = document.getElementById('tabel_inkubasi');
 
-    // Update Data 
+    // Update Data
     const updateData = async (id) => {
       const docSnap = await getDoc(doc(database, 'patroli', id));
 
@@ -159,7 +159,7 @@ const InkubasiPage = {
         document.getElementById('viewtglPenemuan').innerHTML = docSnap.data().tglPenemuan;
         document.getElementById('viewwaktuDitemukan').innerHTML = docSnap.data().waktuDitemukan;
         document.getElementById('viewJumlahTelur').innerHTML = docSnap.data().inputTelurBaik;
-        
+
         const confirmUpdatingSarangButton = document.querySelector('#updateBtn');
         confirmUpdatingSarangButton.addEventListener('click', async () => {
           const inputjumlahTelurMenetas = Number(document.getElementById('jumlahTelurMenetas').value);
@@ -195,7 +195,7 @@ const InkubasiPage = {
           const updatePenangkaran = {
             jumlahTukikDalamPenangkaran: dataTukikDalamPenangkaran,
             totalPenangkaran: dataTotalTukikSelamaIni,
-          }
+          };
 
           await updateDoc(doc(database, 'penangkaran', jenisPenyu), updatePenangkaran);
 
