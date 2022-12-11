@@ -121,7 +121,7 @@ const PenangkaranPage = {
       </div>
             <div class="modal-footer mx-auto">
               <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Batal</button>
-              <button type="button" class="btn btn-primary" id="save">Simpan</button>
+              <button type="button" class="btn btn-primary" id="saveEditPenangkaran">Simpan</button>
             </div>
           </div>
         </div>
@@ -235,6 +235,8 @@ const PenangkaranPage = {
       lekangMati.innerHTML = `${telurGagalTotalLekang}`;
     });
 
+    // console.log(telurMenetasTotalLekang -= 5);
+
     // Sisik
     const sisikMati = document.getElementById('sisikMati');
     const jumlahSisik = document.getElementById('jumlahSisik');
@@ -255,6 +257,19 @@ const PenangkaranPage = {
       sisikMati.innerHTML = `${telurGagalTotalSisik}`;
     });
 
+    // EDIT PENANGKARAN
+
+    const updatePenangkaran = async () => {
+      const inputMati = document.getElementById('jumlahTukikMati');
+      telurMenetasTotalLekang -= inputMati.value;
+      console.log(telurMenetasTotalLekang);
+    };
+
+    const saveEditButton = document.getElementById('saveEditPenangkaran');
+    saveEditButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+      updatePenangkaran();
+    });
     // const tglPerilisan = document.getElementById('tglPerilisan');
     // const waktuPerilisan = document.getElementById('waktuPerilisan');
     // const cuaca = document.getElementById('cuaca');
@@ -279,11 +294,11 @@ const PenangkaranPage = {
           addRilisForm.reset();
         });
     });
-    const edit = document.getElementById('save');
+    // const editButton = document.getElementById('saveEditPenangkaran');
 
-    edit.onclick = () => {
-      alert('tes');
-    };
+  //   editButton.onclick = () => {
+  //     alert('tes');
+  //   };
   },
 };
 

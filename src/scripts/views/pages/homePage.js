@@ -22,7 +22,7 @@ const HomePage = {
       </div>
       <div class="col">
         <div class="mx-auto text-center">
-          <img src="https://i.ibb.co/6b3dGzZ/Penyu-Sisik.jpg" alt="Penyu-Sisik" border="0" class="img-fluid rounded-4" style="width: 25rem">
+          <img src="https://i.ibb.co/r27qZbZ/giorgia-doglioni-3-Ggb-Jx7hg14-unsplash.jpg" alt="Penyu-Sisik" border="0" class="img-fluid rounded-4" style="width: 25rem">
         </div>
       </div>
     </div>
