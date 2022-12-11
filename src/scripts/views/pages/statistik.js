@@ -54,7 +54,7 @@ const StatistikPage = {
         <div class="card statistic-card text-center rounded-5" style="max-width: 18rem;">
           <div class="card-header">Tukik Dilepaskan</div>
           <div class="card-body">
-            <h5 class="card-title" id="tukikDilepaskan">642</h5>
+            <h5 class="card-title" id="tukikDilepaskan"></h5>
           </div>
         </div>
       </div>
