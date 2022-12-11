@@ -161,3 +161,12 @@ li {
   background-color: #61764B;
   color: #eee;
 }
+
+#statistik {
+  margin-bottom: 3rem;
+}
+
+#statistikJenis {
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+}
