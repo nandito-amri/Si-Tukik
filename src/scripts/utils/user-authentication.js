@@ -41,7 +41,6 @@ const Dashboard = () => {
   `;
 
   const url = UrlParser.parseActiveUrlWithCombiner();
-  console.log(url);
   if (url === '/') {
     container.innerHTML = '';
     container.appendChild(welcomePage);

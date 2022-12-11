@@ -1,10 +1,10 @@
 import { initializeApp } from 'firebase/app';
-// eslint-disable-next-line import/no-unresolved
 import swal from 'sweetalert';
 import {
   addDoc,
   getFirestore,
   collection,
+  where,
   doc,
   getDoc,
   query,
@@ -383,6 +383,7 @@ const PatroliPage = {
     // Get database from firestore
     const app = initializeApp(firebaseConfig);
     const database = getFirestore(app);
+    const coll = collection(database, 'patroli');
 
     // Add data (menambahkan sarang)
     const addSarang = async () => {
@@ -392,15 +393,15 @@ const PatroliPage = {
       const perkiraanTglPeneluran = document.getElementById('perkiraanTglPeneluran').value;
       const inputKetebalanPenutup = document.getElementById('inputKetebalanPenutup').value;
       const inputKedalamanDasar = document.getElementById('inputKedalamanDasar').value;
-      const inputJumlahTelur = document.getElementById('inputJumlahTelur').value;
+      const inputJumlahTelur = Number(document.getElementById('inputJumlahTelur').value);
       const inputJenisPenyu01 = document.getElementById('inputJenisPenyu01').value;
-      const inputTelurBaik = document.getElementById('inputTelurBaik').value;
-      const inputTelurRusak = document.getElementById('inputTelurRusak').value;
-      const inputTelurMati = document.getElementById('inputTelurMati').value;
-      const inputTelurAbnormal = document.getElementById('inputTelurAbnormal').value;
-      const jumlahTelurMenetas = '';
-      const jumlahTelurGagal = '';
-      const jumlahMatiMenetas = '';
+      const inputTelurBaik = Number(document.getElementById('inputTelurBaik').value);
+      const inputTelurRusak = Number(document.getElementById('inputTelurRusak').value);
+      const inputTelurMati = Number(document.getElementById('inputTelurMati').value);
+      const inputTelurAbnormal = Number(document.getElementById('inputTelurAbnormal').value);
+      const jumlahTelurMenetas = 0;
+      const jumlahMatiMenetas = 0;
+      let jumlahTelurGagal = 0;
       const createdAt = serverTimestamp();
       if (
         tglPenemuan === ''
@@ -415,13 +416,10 @@ const PatroliPage = {
       || inputTelurRusak === ''
       || inputTelurMati === ''
       || inputTelurAbnormal === ''
-      // || jumlahTelurMenetas === ''
-      // || jumlahTelurGagal === ''
-      // || jumlahMatiMenetas === ''
-
       ) {
         swal('Harap isi kolom yang kosong', '', 'warning');
       } else {
+        jumlahTelurGagal = Number(inputTelurAbnormal) + Number(inputTelurMati) + Number(inputTelurRusak);
         const newPatroli = {
           tglPenemuan,
           waktuDitemukan,
@@ -537,7 +535,6 @@ const PatroliPage = {
       const text = 'Yakin ingin menghapus data?';
       if (confirm(text) === true) {
         await deleteDoc(doc(database, 'patroli', id));
-        console.log('deleteing is succeess');
         swal('Berhasil Menghapus data', '', 'success');
       }
 
@@ -546,12 +543,10 @@ const PatroliPage = {
 
     document.addEventListener(RENDER_EVENT, async () => {
       tableContainer.innerHTML = '';
-      const q = query(collection(database, 'patroli'));
+      const q = query(coll, where('inputTelurBaik', '!=', 0));
       const querySnapshot = await getDocs(q);
-      console.log(querySnapshot.docs);
       let index = 1;
       querySnapshot.docs.reverse().forEach((item) => {
-        console.log(item);
         const sarangElement = document.createElement('tr');
         sarangElement.innerHTML += `
             <th scope="row" class="text-center">${index}</th>
@@ -575,7 +570,6 @@ const PatroliPage = {
         deleteButton.addEventListener('click', (event) => {
           event.stopPropagation();
           const sarangId = event.currentTarget.id;
-          console.log(sarangId);
 
           deleteSarang(sarangId);
         });

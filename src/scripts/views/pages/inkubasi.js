@@ -1,21 +1,19 @@
 import { initializeApp } from 'firebase/app';
-// eslint-disable-next-line import/no-unresolved
 import swal from 'sweetalert';
 import {
   getFirestore,
   collection,
   query,
+  where,
   getDocs,
   doc,
   getDoc,
   updateDoc,
-  addDoc,
 } from 'firebase/firestore';
 import firebaseConfig from '../../globals/firebase-config';
 
 const InkubasiPage = {
   async render() {
-    console.log('Inkubasi Page');
     return `
       <div class="content">
         <h1 class="ms-5 judul">Halaman Pendataan</h1>
@@ -63,7 +61,6 @@ const InkubasiPage = {
           <p>Tanggal Ditemukan : <span id="viewtglPenemuan"></span></p>
           <p>Waktu Penemuan : <span id="viewwaktuDitemukan"></span></p>
           <p>Jumlah Telur : <span id="viewJumlahTelur"></span></p>
-          <p>Telur Baik : <span id="viewTelurBaik"></span></p>
         </div>
         
         <form id ="addKondisiTelur">
@@ -104,7 +101,6 @@ const InkubasiPage = {
                 <div class="col">
                   <h4>Data Penemuan</h4>
                   <div class="my-3">
-                  <p>ID Sarang : <span>#001</span></p>
                   <p>Jenis Penyu : <span id="viewjenisPenyu2">Lekang</span></p>
                   <p>Tanggal Penemuan : <span id="viewtglpenemuan2">8 November 2022</span></p>
                   <p>Waktu Penemuan : <span id="viewwaktuditemukan2">08 : 21 : 34 PM</span></p>
@@ -147,40 +143,65 @@ const InkubasiPage = {
   },
 
   async afterRender() {
-    // FUngsi dipanggil setelah render()
     const RENDER_EVENT = 'render-event';
     const app = initializeApp(firebaseConfig);
     const database = getFirestore(app);
+    const coll = collection(database, 'patroli');
+
     const tableContainer = document.getElementById('tabel_inkubasi');
 
-    // View Detail Data (melihat data sarang secara detail)
-    const viewinkubasi = async (id) => {
+    // Update Data 
+    const updateData = async (id) => {
       const docSnap = await getDoc(doc(database, 'patroli', id));
-      const inputjumlahTelurMenetas = document.getElementById('jumlahTelurMenetas');
-      const inputjumlahTelurGagal = document.getElementById('jumlahTelurGagal');
-      const inputjumlahMatiMenetas = document.getElementById('jumlahMatiMenetas');
+
       if (docSnap.exists()) {
-        console.log('initest', docSnap.data().inputTelurBaik);
         document.getElementById('viewJenisPenyu01').innerHTML = docSnap.data().inputJenisPenyu01;
         document.getElementById('viewtglPenemuan').innerHTML = docSnap.data().tglPenemuan;
         document.getElementById('viewwaktuDitemukan').innerHTML = docSnap.data().waktuDitemukan;
-        document.getElementById('viewJumlahTelur').innerHTML = docSnap.data().inputJumlahTelur;
-        document.getElementById('viewTelurBaik').innerHTML = docSnap.data().inputTelurBaik;
-        inputjumlahTelurMenetas.value = docSnap.data().jumlahTelurMenetas;
-        inputjumlahTelurGagal.value = docSnap.data().jumlahTelurGagal;
-        inputjumlahMatiMenetas.value = docSnap.data().jumlahMatiMenetas;
+        document.getElementById('viewJumlahTelur').innerHTML = docSnap.data().inputTelurBaik;
+        
         const confirmUpdatingSarangButton = document.querySelector('#updateBtn');
         confirmUpdatingSarangButton.addEventListener('click', async () => {
+          const inputjumlahTelurMenetas = Number(document.getElementById('jumlahTelurMenetas').value);
+          const inputjumlahTelurGagal = Number(document.getElementById('jumlahTelurGagal').value);
+          const inputjumlahMatiMenetas = Number(document.getElementById('jumlahMatiMenetas').value);
+
+          let updateJumlahTelur = Number(docSnap.data().inputTelurBaik);
+          updateJumlahTelur -= inputjumlahTelurMenetas;
+
+          let updateTelurGagal = docSnap.data().jumlahTelurGagal;
+          updateTelurGagal += inputjumlahTelurGagal;
+          updateJumlahTelur -= inputjumlahTelurGagal;
+          updateJumlahTelur -= inputjumlahMatiMenetas;
+
           const updatePatroli = {
-            jumlahTelurMenetas: inputjumlahTelurMenetas.value,
-            jumlahTelurGagal: inputjumlahTelurGagal.value,
-            jumlahMatiMenetas: inputjumlahMatiMenetas.value,
+            inputTelurBaik: updateJumlahTelur,
+            jumlahTelurMenetas: inputjumlahTelurMenetas,
+            jumlahTelurGagal: updateTelurGagal,
+            jumlahMatiMenetas: inputjumlahMatiMenetas,
           };
+
           await updateDoc(doc(database, 'patroli', id), updatePatroli);
+
+          const jenisPenyu = docSnap.data().inputJenisPenyu01;
+          const documentPenangkaran = await getDoc(doc(database, 'penangkaran', jenisPenyu));
+
+          const jumlahTambahanTukikMenetas = inputjumlahTelurMenetas;
+          let dataTukikDalamPenangkaran = documentPenangkaran.data().jumlahTukikDalamPenangkaran;
+          dataTukikDalamPenangkaran += jumlahTambahanTukikMenetas;
+          let dataTotalTukikSelamaIni = documentPenangkaran.data().totalPenangkaran;
+          dataTotalTukikSelamaIni += jumlahTambahanTukikMenetas;
+
+          const updatePenangkaran = {
+            jumlahTukikDalamPenangkaran: dataTukikDalamPenangkaran,
+            totalPenangkaran: dataTotalTukikSelamaIni,
+          }
+
+          await updateDoc(doc(database, 'penangkaran', jenisPenyu), updatePenangkaran);
+
           document.dispatchEvent(new Event(RENDER_EVENT));
           swal('Sukses', 'Data berhasil diupdate', 'success');
         });
-        confirmUpdatingSarangButton.setAttribute('id', id);
       } else {
         console.log('No such document!');
       }
@@ -209,41 +230,41 @@ const InkubasiPage = {
         console.log('No such document!');
       }
     };
+
     document.addEventListener(RENDER_EVENT, async () => {
       tableContainer.innerHTML = '';
-      const q = query(collection(database, 'patroli'));
-
+      const q = query(coll, where('inputTelurBaik', '!=', 0));
       const querySnapshot = await getDocs(q);
+
       let index = 1;
       querySnapshot.forEach((item) => {
-        // console.log(item);
         const sarangElement = document.createElement('tr');
         sarangElement.innerHTML += `
-        <th scope="row" class="text-center">${index}</th>
-        <td class="text-center">${item.data().inputJenisPenyu01}</td>
-        <td class="text-center">${item.data().tglPenemuan}</td>
-        <td class="text-center">${item.data().tglPeneluran}</td>
-        <td class="text-center">${item.data().inputJumlahTelur}</td>
-        <td class="text-center">
-        <button type="button" class="btn btn-warning px-2 rounded-4 view-btn" data-bs-toggle="modal" data-bs-target="#catatPenetasanModal"" title="Ubah Data" id=${item.id}><i class="bi bi-pencil-square action-btn"></i></button>
-        <button type="button" class="btn btn-success px-2 rounded-4 detail-btn" data-bs-toggle="modal" data-bs-target="#detailInkubasi" title="Detail" id=${item.id}>•••</button>
-        </td>
+          <th scope="row" class="text-center">${index}</th>
+          <td class="text-center">${item.data().inputJenisPenyu01}</td>
+          <td class="text-center">${item.data().tglPenemuan}</td>
+          <td class="text-center">${item.data().tglPeneluran}</td>
+          <td class="text-center">${item.data().inputTelurBaik}</td>
+          <td class="text-center">
+          <button type="button" class="btn btn-warning px-2 rounded-4 view-btn" data-bs-toggle="modal" data-bs-target="#catatPenetasanModal"" title="Ubah Data" id=${item.id}><i class="bi bi-pencil-square action-btn"></i></button>
+          <button type="button" class="btn btn-success px-2 rounded-4 detail-btn" data-bs-toggle="modal" data-bs-target="#detailInkubasi" title="Detail" id=${item.id}>•••</button>
+          </td>
         `;
 
         tableContainer.appendChild(sarangElement);
-
         index += 1;
       });
-      const viewInkubasiButtons = document.querySelectorAll('.view-btn');
-      viewInkubasiButtons.forEach((detailinkubasi) => {
+
+      const updateInkubasiButtons = document.querySelectorAll('.view-btn');
+      updateInkubasiButtons.forEach((detailinkubasi) => {
         detailinkubasi.addEventListener('click', (event) => {
           event.stopPropagation();
           const sarangId = event.currentTarget.id;
 
-          viewinkubasi(sarangId);
-          console.log(viewinkubasi(sarangId));
+          updateData(sarangId);
         });
       });
+
       const viewDetailButtons = document.querySelectorAll('.detail-btn');
       viewDetailButtons.forEach((detailinkubasi) => {
         detailinkubasi.addEventListener('click', (event) => {
