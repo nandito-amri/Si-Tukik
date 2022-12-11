@@ -1,5 +1,4 @@
 import { initializeApp } from 'firebase/app';
-// eslint-disable-next-line import/no-unresolved
 import swal from 'sweetalert';
 import {
   getFirestore,
@@ -128,8 +127,9 @@ const PerilisanPage = {
     const RENDER_EVENT = 'render-event';
     const app = initializeApp(firebaseConfig);
     const database = getFirestore(app);
+
     const tableContainer = document.getElementById('tabel_perilisan');
-    // Delete Data (menghapus data sarang)
+
     const deleteRilis = async (id) => {
       const text = 'Yakin ingin menghapus data?';
       if (confirm(text) === true) {
@@ -141,7 +141,6 @@ const PerilisanPage = {
       document.dispatchEvent(new Event(RENDER_EVENT));
     };
 
-    // Edit Data (mengubah data sarang)
     const updateRilis = async (id) => {
       const updatetglPerilisan = document.getElementById('update-tglPerilisan');
       const updatewaktuPerilisan = document.getElementById('update-waktuPerilisan');
@@ -185,40 +184,40 @@ const PerilisanPage = {
       const querySnapshot = await getDocs(q);
       let index = 1;
       querySnapshot.forEach((item) => {
-        // console.log(item);
         const sarangElement = document.createElement('tr');
         sarangElement.innerHTML += `
-        <th scope="row" class="text-center">${index}</th>
-        <td class="text-center">${item.data().tglPerilisan}</td>
-        <td class="text-center">${item.data().waktuPerilisan}</td>
-        <td class="text-center">${item.data().cuaca}</td>
-        <td class="text-center">${item.data().jenisPenyu}</td>
-        <td class="text-center">${item.data().jumlahTukikRilis}</td>
-        <td class="text-center">
-        <button type="button" class="btn btn-warning px-2 rounded-4 update-btn" data-bs-toggle="modal" data-bs-target="#ubahRilisModal" title="Ubah Data" id=${item.id}><i class="bi bi-pencil-square action-btn"></i></button>
-        <button type="button" class="btn btn-danger px-2 rounded-4 delete-btn" title="Hapus Data" id=${item.id}><i class="bi bi-trash-fill"></i></button>
-        </td>
+          <th scope="row" class="text-center">${index}</th>
+          <td class="text-center">${item.data().tglPerilisan}</td>
+          <td class="text-center">${item.data().waktuPerilisan}</td>
+          <td class="text-center">${item.data().cuaca}</td>
+          <td class="text-center">${item.data().jenisPenyu}</td>
+          <td class="text-center">${item.data().jumlahTukikRilis}</td>
+          <td class="text-center">
+            <button type="button" class="btn btn-warning px-2 rounded-4 update-btn" data-bs-toggle="modal" data-bs-target="#ubahRilisModal" title="Ubah Data" id=${item.id}><i class="bi bi-pencil-square action-btn"></i></button>
+            <button type="button" class="btn btn-danger px-2 rounded-4 delete-btn" title="Hapus Data" id=${item.id}><i class="bi bi-trash-fill"></i></button>
+          </td> 
         `;
 
         tableContainer.appendChild(sarangElement);
-
         index += 1;
       });
+
       const deleteRilisButtons = document.querySelectorAll('.delete-btn');
       deleteRilisButtons.forEach((deleteButton) => {
         deleteButton.addEventListener('click', (event) => {
           event.stopPropagation();
           const sarangId = event.currentTarget.id;
-          console.log(sarangId);
 
           deleteRilis(sarangId);
         });
       });
+
       const updateRilisButtons = document.querySelectorAll('.update-btn');
       updateRilisButtons.forEach((updateButton) => {
         updateButton.addEventListener('click', (event) => {
           event.stopPropagation();
           const sarangId = event.currentTarget.id;
+          
           updateRilis(sarangId);
         });
       });

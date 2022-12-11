@@ -1,22 +1,13 @@
-/* eslint-disable no-multi-assign */
 import { initializeApp } from 'firebase/app';
-// eslint-disable-next-line import/no-unresolved
 import swal from 'sweetalert';
 import {
   addDoc,
   getFirestore,
   collection,
-  where,
   doc,
   getDoc,
-  query,
-  getCountFromServer,
-  getDocs,
-  onSnapshot,
-  deleteDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
 import firebaseConfig from '../../globals/firebase-config';
 
 const PenangkaranPage = {
@@ -39,7 +30,7 @@ const PenangkaranPage = {
         <div class="row row-cols-1 row-cols-md-2 g-4" id="penangkaranPenyuLekang">
           <div class="col">
             <div class="card text-bg-light text-center mx-auto statistic-card rounded-4" style="max-width: 18rem;">
-              <div class="card-header">Total Tukik dalam Penangakran</div>
+              <div class="card-header">Total Tukik dalam Penangkaran</div>
               <div class="card-body">
                 <h5 class="card-title" id="jumlahLekang"></h5>
               </div>
@@ -121,7 +112,7 @@ const PenangkaranPage = {
       </div>
             <div class="modal-footer mx-auto">
               <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Batal</button>
-              <button type="button" class="btn btn-primary" id="saveEditPenangkaran">Simpan</button>
+              <button type="button" class="btn btn-primary" id="save">Simpan</button>
             </div>
           </div>
         </div>
@@ -194,7 +185,7 @@ const PenangkaranPage = {
       </div>
             <div class="modal-footer mx-auto">
             <button type="button" class="btn ghost-button" data-bs-dismiss="modal">Batal</button>
-            <button type="button" class="btn filled-button" data-bs-dismiss="modal" id="saveBtn">Simpan</button>
+            <button type="button" class="btn filled-button" data-bs-dismiss="modal" id="rilisBtn">Rilis</button>
     
             </div>
           </div>
@@ -206,99 +197,143 @@ const PenangkaranPage = {
 
   async afterRender() {
     const RENDER_EVENT = 'render-event';
-
-    // Get database from firestore
     const app = initializeApp(firebaseConfig);
     const database = getFirestore(app);
-    const coll = collection(database, 'patroli');
 
-    // lekang
-    const jumlahLekang = document.getElementById('jumlahLekang');
-    const queryLekang = query(coll, where('inputJenisPenyu01', '==', 'Lekang'));
-    // const lekang = await getCountFromServer(queryLekang);
-    const lekangMati = document.getElementById('lekangMati');
-    let telurGagalTotalLekang = null;
-    let telurMenetasTotalLekang = null;
-    let telurGagalTotalSisik = null;
-    let telurMenetasTotalSisik = null;
-    // show data lekang
-    // jumlahLekang.innerHTML = `${lekang.data().count}`;
-    const querySnapshotLekang = await getDocs(queryLekang);
-    querySnapshotLekang.forEach((item) => {
-      const totalLekang = Math.floor(item.data().jumlahTelurMenetas);
-      telurMenetasTotalLekang += totalLekang;
-      jumlahLekang.innerHTML = `${telurMenetasTotalLekang}`;
+    const penyuLekang = await getDoc(doc(database, 'penangkaran', 'Lekang'));
+    const penyuSisik = await getDoc(doc(database, 'penangkaran', 'Sisik'));
+    
+    const editDataPenangkaran = async () => {
+      const jenisPenyu = document.getElementById('inputJenisPenyu').value;
+      const jumlahTukikMati = Number(document.getElementById('jumlahTukikMati').value);
+      console.log(jenisPenyu);
+      
+      if (jenisPenyu === 'Lekang') {
+        let updateTukikDalamPenangkaran = penyuLekang.data().jumlahTukikDalamPenangkaran;
+        updateTukikDalamPenangkaran -= jumlahTukikMati;
 
-      const gagalLekang = Math.floor(item.data().jumlahTelurGagal);
-      let gagalLekang1 = Math.floor(item.data().jumlahMatiMenetas);
-      telurGagalTotalLekang += gagalLekang1 += gagalLekang;
-      lekangMati.innerHTML = `${telurGagalTotalLekang}`;
-    });
+        let updateTukikMati = penyuLekang.data().jumlahTukikMati;
+        updateTukikMati += jumlahTukikMati;
 
-    // console.log(telurMenetasTotalLekang -= 5);
+        const updatePenangkaran = {
+          jumlahTukikDalamPenangkaran: updateTukikDalamPenangkaran,
+          jumlahTukikMati: updateTukikMati,
+        };
 
-    // Sisik
-    const sisikMati = document.getElementById('sisikMati');
-    const jumlahSisik = document.getElementById('jumlahSisik');
-    const querySisik = query(coll, where('inputJenisPenyu01', '==', 'Sisik'));
-    const sisik = await getCountFromServer(querySisik);
+        await updateDoc(doc(database, 'penangkaran', 'Lekang'), updatePenangkaran);
 
-    // show data sisik
-    jumlahSisik.innerHTML = `${sisik.data().count}`;
-    const querySnapshotSisik = await getDocs(querySisik);
-    querySnapshotSisik.forEach((item) => {
-      const menetasSisik = Math.floor(item.data().jumlahTelurMenetas);
-      telurMenetasTotalSisik += menetasSisik;
-      jumlahSisik.innerHTML = `${telurMenetasTotalSisik}`;
+        document.dispatchEvent(new Event(RENDER_EVENT));
+        swal('Sukses', 'Data berhasil diupdate', 'success');
+      } else if (jenisPenyu === 'Sisik') {
+        let updateTukikDalamPenangkaran = penyuSisik.data().jumlahTukikDalamPenangkaran;
+        updateTukikDalamPenangkaran -= jumlahTukikMati;
 
-      const gagalSisik = Math.floor(item.data().jumlahTelurGagal);
-      let gagalSisik1 = Math.floor(item.data().jumlahMatiMenetas);
-      telurGagalTotalSisik += gagalSisik1 += gagalSisik;
-      sisikMati.innerHTML = `${telurGagalTotalSisik}`;
-    });
+        let updateTukikMati = penyuSisik.data().jumlahTukikMati;
+        updateTukikMati += jumlahTukikMati;
 
-    // EDIT PENANGKARAN
+        const updatePenangkaran = {
+          jumlahTukikDalamPenangkaran: updateTukikDalamPenangkaran,
+          jumlahTukikMati: updateTukikMati,
+        };
 
-    const updatePenangkaran = async () => {
-      const inputMati = document.getElementById('jumlahTukikMati');
-      telurMenetasTotalLekang -= inputMati.value;
-      console.log(telurMenetasTotalLekang);
+        await updateDoc(doc(database, 'penangkaran', 'Sisik'), updatePenangkaran);
+
+        document.dispatchEvent(new Event(RENDER_EVENT));
+        swal('Sukses', 'Data berhasil diupdate', 'success');
+      } else {
+        swal('Jenis Penyu Tidak Ditemukan', '', 'warning')
+      }
     };
 
-    const saveEditButton = document.getElementById('saveEditPenangkaran');
-    saveEditButton.addEventListener('click', (event) => {
-      event.stopPropagation();
-      updatePenangkaran();
+    const rilisTukik = async () => {
+      const addRilisForm = document.querySelector('.addrilis');
+
+      const jenisPenyu = addRilisForm.jenisPenyu.value;
+      const jumlahTukikDirilis = Number(addRilisForm.jumlahTukikRilis.value);
+
+      if (jenisPenyu === 'Lekang') {
+        let updateTukikDalamPenangkaran = penyuLekang.data().jumlahTukikDalamPenangkaran;
+        console.log(updateTukikDalamPenangkaran);
+        if (jumlahTukikDirilis > updateTukikDalamPenangkaran) {
+          swal('Jumlah Tukik kurang', '', 'warning');
+        } else {
+          updateTukikDalamPenangkaran -= jumlahTukikDirilis;
+
+          const updatePenangkaran = {
+            jumlahTukikDalamPenangkaran: updateTukikDalamPenangkaran,
+          };
+
+          await updateDoc(doc(database, 'penangkaran', 'Lekang'), updatePenangkaran);
+
+          const newRilis = {
+            tglPerilisan: addRilisForm.tglPerilisan.value,
+            waktuPerilisan: addRilisForm.waktuPerilisan.value,
+            cuaca: addRilisForm.cuaca.value,
+            jenisPenyu: addRilisForm.jenisPenyu.value,
+            jumlahTukikRilis: addRilisForm.jumlahTukikRilis.value,
+          }
+
+          await addDoc(collection(database, 'rilis'), newRilis);
+        }
+      } else if (jenisPenyu === 'Sisik') {
+        let updateTukikDalamPenangkaran = penyuSisik.data().jumlahTukikDalamPenangkaran;
+        if (jumlahTukikDirilis > updateTukikDalamPenangkaran) {
+          swal('Jumlah Tukik kurang', '', 'warning');
+        } else {
+          updateTukikDalamPenangkaran -= jumlahTukikDirilis;
+  
+          const updatePenangkaran = {
+            jumlahTukikDalamPenangkaran: updateTukikDalamPenangkaran,
+          };
+  
+          await updateDoc(doc(database, 'penangkaran', 'Sisik'), updatePenangkaran);
+  
+          const newRilis = {
+            tglPerilisan: addRilisForm.tglPerilisan.value,
+            waktuPerilisan: addRilisForm.waktuPerilisan.value,
+            cuaca: addRilisForm.cuaca.value,
+            jenisPenyu: addRilisForm.jenisPenyu.value,
+            jumlahTukikRilis: addRilisForm.jumlahTukikRilis.value,
+          }
+  
+          await addDoc(collection(database, 'rilis'), newRilis);
+        }
+      };
+
+      document.dispatchEvent(new Event(RENDER_EVENT));
+      swal('Berhasil', '', 'success');
+    }
+    
+    document.addEventListener(RENDER_EVENT, async () => {
+      const jumlahLekang = document.getElementById('jumlahLekang');
+      const jumlahSisik = document.getElementById('jumlahSisik');
+      const lekangMati = document.getElementById('lekangMati');
+      const sisikMati = document.getElementById('sisikMati');
+    
+      jumlahLekang.innerHTML = '';
+      jumlahSisik.innerHTML = '';
+      lekangMati.innerHTML = '';
+      sisikMati.innerHTML = '';
+
+      jumlahLekang.innerHTML += penyuLekang.data().jumlahTukikDalamPenangkaran;
+      jumlahSisik.innerHTML += penyuSisik.data().jumlahTukikDalamPenangkaran;
+      lekangMati.innerHTML += penyuLekang.data().jumlahTukikMati;
+      sisikMati.innerHTML += penyuSisik.data().jumlahTukikMati;
+
+      const editButton = document.getElementById('save');
+      editButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        editDataPenangkaran();
+      });
+
+      const rilisButton = document.getElementById('rilisBtn');
+      rilisButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        rilisTukik();
+      });
     });
-    // const tglPerilisan = document.getElementById('tglPerilisan');
-    // const waktuPerilisan = document.getElementById('waktuPerilisan');
-    // const cuaca = document.getElementById('cuaca');
-    // const jenisPenyu = document.getElementById('jenisPenyu');
-    // const jumlahTukikRilis = document.getElementById('jumlahTukikRilis');
 
-    const colRef = collection(database, 'rilis');
-    const addRilisForm = document.querySelector('.addrilis');
-    const btnSave = document.getElementById('saveBtn');
-    btnSave.addEventListener('click', (e) => {
-      e.preventDefault();
-
-      addDoc(colRef, {
-        tglPerilisan: addRilisForm.tglPerilisan.value,
-        waktuPerilisan: addRilisForm.waktuPerilisan.value,
-        cuaca: addRilisForm.cuaca.value,
-        jenisPenyu: addRilisForm.jenisPenyu.value,
-        jumlahTukikRilis: addRilisForm.jumlahTukikRilis.value,
-      })
-        .then(() => {
-          swal('Berhasil', '', 'success');
-          addRilisForm.reset();
-        });
-    });
-    // const editButton = document.getElementById('saveEditPenangkaran');
-
-  //   editButton.onclick = () => {
-  //     alert('tes');
-  //   };
+    document.dispatchEvent(new Event(RENDER_EVENT));
   },
 };
 
