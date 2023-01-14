@@ -14,6 +14,7 @@ import {
   updateDoc,
   serverTimestamp,
 } from 'firebase/firestore';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import firebaseConfig from '../../globals/firebase-config';
 
 const PatroliPage = {
@@ -377,6 +378,12 @@ const PatroliPage = {
   },
 
   async afterRender() {
+    onAuthStateChanged(getAuth(), (user) => {
+      if (!user) {
+        location.href = '#/';
+        console.log('Login Required');
+      }
+    });
     const RENDER_EVENT = 'render-event';
     const tableContainer = document.getElementById('tabel_patroli');
     tableContainer.innerHTML = '';

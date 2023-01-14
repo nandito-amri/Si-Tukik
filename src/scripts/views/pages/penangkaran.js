@@ -8,6 +8,7 @@ import {
   getDoc,
   updateDoc,
 } from 'firebase/firestore';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import firebaseConfig from '../../globals/firebase-config';
 
 const PenangkaranPage = {
@@ -196,6 +197,12 @@ const PenangkaranPage = {
   },
 
   async afterRender() {
+    onAuthStateChanged(getAuth(), (user) => {
+      if (!user) {
+        location.href = '#/';
+        console.log('Login Required');
+      }
+    });
     const RENDER_EVENT = 'render-event';
     const app = initializeApp(firebaseConfig);
     const database = getFirestore(app);
