@@ -8,7 +8,9 @@ import {
   getDoc,
   updateDoc,
 } from 'firebase/firestore';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import firebaseConfig from '../../globals/firebase-config';
+import loginreq from '../../utils/user-authentication';
 
 const PenangkaranPage = {
   async render() {
@@ -196,6 +198,7 @@ const PenangkaranPage = {
   },
 
   async afterRender() {
+    loginreq();
     const RENDER_EVENT = 'render-event';
     const app = initializeApp(firebaseConfig);
     const database = getFirestore(app);

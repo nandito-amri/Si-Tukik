@@ -10,7 +10,9 @@ import {
   getDocs,
   updateDoc,
 } from 'firebase/firestore';
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import firebaseConfig from '../../globals/firebase-config';
+import loginreq from '../../utils/user-authentication';
 
 const PerilisanPage = {
   async render() {
@@ -124,6 +126,7 @@ const PerilisanPage = {
   },
 
   async afterRender() {
+    loginreq();
     const RENDER_EVENT = 'render-event';
     const app = initializeApp(firebaseConfig);
     const database = getFirestore(app);

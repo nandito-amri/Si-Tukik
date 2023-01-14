@@ -1,6 +1,19 @@
-import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import {
+  getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut,
+} from 'firebase/auth';
 import swal from 'sweetalert';
 import UrlParser from '../routes/url-parser';
+
+const loginreq = () => {
+  onAuthStateChanged(getAuth(), (user) => {
+    if (!user) {
+      location.href = '#/';
+      console.log('Login Require');
+    }
+  });
+};
+
+export default loginreq;
 
 const Landing = () => {
   const email = document.querySelector('#email');
